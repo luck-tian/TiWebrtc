@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">NewDialer</string>
+
+    <string-array name="dialer_title_tips">
+        <item>All Collects</item>
+        <item>Recent Call</item>
+        <item>All Contacts</item>
+    </string-array>
 </resources>
