@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="dialer_main_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/dialer_main_title_text_and_image_margin
+        </item>
+        <item name="android:text">Recent Call</item>
+        <item name="android:textColor">@color/dialer_main_title_color</item>
+        <item name="android:textSize">@dimen/dialer_main_title_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="dialer_main_image">
+        <item name="android:layout_width">@dimen/dialer_main_title_image_button_width</item>
+        <item name="android:layout_height">@dimen/dialer_main_title_image_button_height</item>
+        <item name="android:layout_marginEnd">@dimen/dialer_main_title_text_and_image_margin</item>
+        <item name="android:background">@drawable/dialer_main_image_background</item>
+    </style>
+</resources>

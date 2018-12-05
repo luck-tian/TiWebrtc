@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+
+    <path
+        android:fillColor="@color/dialer_main_tab_layout_item_normal"
+        android:pathData="M509.744 62.231c-247.424 0-448.033 200.609-448.033 448.033S262.32 958.297 509.744 958.297s448.033-200.609 448.033-448.033S757.168 62.231 509.744 62.231z m37.336 522.705H285.728V547.6h224.016V213.107h37.336v371.829z" />
+</vector>

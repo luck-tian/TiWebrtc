@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="dialer_main_title_width">66dp</dimen>
+    <dimen name="dialer_main_title_text_size">26sp</dimen>
+    <dimen name="dialer_main_title_text_padding_bottom">5dp</dimen>
+    <dimen name="dialer_main_title_text_padding_left">10dp</dimen>
+
+    <dimen name="dialer_main_title_image_button_width">32dp</dimen>
+    <dimen name="dialer_main_title_image_button_height">32dp</dimen>
+    <dimen name="dialer_main_title_text_and_image_margin">16dp</dimen>
+
+    <dimen name="dialer_main_tab_layout_height">36dp</dimen>
+    <dimen name="dialer_main_tab_layout_margin_top">8dp</dimen>
+    <dimen name="dialer_main_tab_layout_indicator_height">0.5dp</dimen>
+    <dimen name="dialer_main_action_button_margin_bottom">16dp</dimen>
+</resources>
