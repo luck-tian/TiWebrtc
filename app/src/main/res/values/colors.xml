@@ -8,10 +8,7 @@
     <color name="dialer_main_title_color">#1E1E1E</color>
 
     <color name="dialer_main_tab_layout_item_normal">#40808080</color>
-
-
-
-
+    <color name="dialer_main_floating_button_background">#0BCD74</color>
 
 
     <color name="white">#FFFFFF</color>

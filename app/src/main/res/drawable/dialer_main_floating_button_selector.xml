@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/white">
 
-    <item android:state_pressed="true">
+
+    <item>
         <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="180dp" />
+                    <solid android:color="@color/dialer_main_floating_button_background" />
+                </shape>
+            </item>
+            <item
+                android:bottom="3dp"
+                android:drawable="@drawable/dialer_main_floating_button"
+                android:gravity="center"
+                android:left="3dp"
+                android:right="3dp"
+                android:top="3dp" />
 
         </layer-list>
-
     </item>
 
-</selector>
+</ripple>
