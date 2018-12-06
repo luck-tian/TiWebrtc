@@ -1,20 +1,23 @@
 package com.hhtc.dialer;
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.hhtc.dialer.animation.DialerActionButtonAnimation;
+import com.hhtc.dialer.main.DialerFragment;
 import com.hhtc.dialer.main.DialerTabPagerAdapter;
 import com.hhtc.dialer.main.TabSelectedListenerImpl;
 import com.hhtc.dialer.main.collects.CollectsFragment;
 import com.hhtc.dialer.main.contacts.ContactsFragment;
 import com.hhtc.dialer.main.recent.RecentFragment;
+import com.hhtc.dialer.permission.PermissionsUtil;
 import com.hhtc.dialer.view.TableViewPager;
 
 import java.util.ArrayList;
@@ -25,6 +28,8 @@ import java.util.Objects;
  * 新版本dialer
  */
 public class DialerActivity extends AppCompatActivity {
+
+    public static final int REQUEST_READ_CONTACTS = 1;
 
     private TextView title_tips;
     private ImageButton add_contacts;
@@ -49,6 +54,13 @@ public class DialerActivity extends AppCompatActivity {
         page_navigation = findViewById(R.id.page_navigation);
         content_pager = findViewById(R.id.content_pager);
         action_button = findViewById(R.id.action_button);
+        String[] deniedContactsPermissions =
+                PermissionsUtil.getPermissionsCurrentlyDenied(
+                        this, PermissionsUtil.allContactsGroupPermissionsUsedInDialer);
+        if (deniedContactsPermissions.length > 0) {
+            ActivityCompat.requestPermissions(this, PermissionsUtil.allPhoneGroupPermissionsUsedInDialer.toArray(new String[PermissionsUtil.allPhoneGroupPermissionsUsedInDialer.size()]),
+                    REQUEST_READ_CONTACTS);
+        }
     }
 
 
@@ -66,8 +78,8 @@ public class DialerActivity extends AppCompatActivity {
         stringTips = getResources().getStringArray(R.array.dialer_title_tips);
     }
 
-    private List<Fragment> createPager() {
-        List<Fragment> pagers = new ArrayList<>();
+    private List<DialerFragment> createPager() {
+        List<DialerFragment> pagers = new ArrayList<>();
         pagers.add(CollectsFragment.newInstance());
         pagers.add(RecentFragment.newInstance());
         pagers.add(ContactsFragment.newInstance());

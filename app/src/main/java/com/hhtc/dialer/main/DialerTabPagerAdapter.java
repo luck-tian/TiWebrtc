@@ -8,9 +8,9 @@ import java.util.List;
 
 public class DialerTabPagerAdapter extends FragmentStatePagerAdapter {
 
-    private List<Fragment> pagers;
+    private List<DialerFragment> pagers;
 
-    public DialerTabPagerAdapter(FragmentManager fm, List<Fragment> pagers) {
+    public DialerTabPagerAdapter(FragmentManager fm, List<DialerFragment> pagers) {
         super(fm);
         this.pagers = pagers;
     }
@@ -24,4 +24,5 @@ public class DialerTabPagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return pagers.size();
     }
+
 }

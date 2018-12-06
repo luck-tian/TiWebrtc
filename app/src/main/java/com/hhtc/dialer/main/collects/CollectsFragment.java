@@ -4,16 +4,16 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.hhtc.dialer.R;
+import com.hhtc.dialer.main.DialerFragment;
 
-public class CollectsFragment extends Fragment {
+public class CollectsFragment extends DialerFragment {
 
-    private CollectsViewModel mViewModel;
+    private ContactsViewModel viewModel;
 
     public static CollectsFragment newInstance() {
         return new CollectsFragment();
@@ -28,7 +28,7 @@ public class CollectsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(CollectsViewModel.class);
+        viewModel=ViewModelProviders.of(this).get(ContactsViewModel.class);
         // TODO: Use the ViewModel
     }
 
