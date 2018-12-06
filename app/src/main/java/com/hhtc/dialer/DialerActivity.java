@@ -5,10 +5,13 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.hhtc.dialer.animation.DialerActionButtonAnimation;
 import com.hhtc.dialer.main.DialerTabPagerAdapter;
+import com.hhtc.dialer.main.TabSelectedListenerImpl;
 import com.hhtc.dialer.main.collects.CollectsFragment;
 import com.hhtc.dialer.main.contacts.ContactsFragment;
 import com.hhtc.dialer.main.recent.RecentFragment;
@@ -29,6 +32,7 @@ public class DialerActivity extends AppCompatActivity {
     private TableViewPager content_pager;
     private FloatingActionButton action_button;
     private DialerTabPagerAdapter adapter;
+    private String[] stringTips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +56,14 @@ public class DialerActivity extends AppCompatActivity {
         adapter = new DialerTabPagerAdapter(getSupportFragmentManager(), createPager());
         content_pager.setAdapter(adapter);
         page_navigation.setupWithViewPager(content_pager);
+        content_pager.setCurrentItem(1);
         Objects.requireNonNull(page_navigation.getTabAt(0)).setIcon(R.drawable.dialer_main_collect_icon_selector);
         Objects.requireNonNull(page_navigation.getTabAt(1)).setIcon(R.drawable.dialer_main_recent_call_icon_selector);
         Objects.requireNonNull(page_navigation.getTabAt(2)).setIcon(R.drawable.dialer_main_contacts_icon_selector);
 
-
+        page_navigation.addOnTabSelectedListener(tabSelectedListener);
+        action_button.setOnClickListener(actionButtonListener);
+        stringTips = getResources().getStringArray(R.array.dialer_title_tips);
     }
 
     private List<Fragment> createPager() {
@@ -66,4 +73,25 @@ public class DialerActivity extends AppCompatActivity {
         pagers.add(ContactsFragment.newInstance());
         return pagers;
     }
+
+    private TabSelectedListenerImpl tabSelectedListener = new TabSelectedListenerImpl() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            title_tips.setText(stringTips[tab.getPosition()]);
+            if (tab.getPosition() == 2) {
+                add_contacts.setVisibility(View.VISIBLE);
+            } else {
+                add_contacts.setVisibility(View.GONE);
+            }
+        }
+    };
+
+    private View.OnClickListener actionButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            DialerActionButtonAnimation.scaleOut(v);
+            //启动拨号界面
+        }
+    };
+
 }
