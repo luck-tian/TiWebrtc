@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hhtc.dialer.R;
+
 import com.hhtc.dialer.main.DialerFragment;
+
 
 public class ContactsFragment extends DialerFragment {
 
@@ -29,7 +31,8 @@ public class ContactsFragment extends DialerFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ContactsViewModel.class);
-        // TODO: Use the ViewModel
+
     }
+
 
 }

@@ -24,4 +24,18 @@
     <dimen name="dialer_main_favorite_name_margin">15dp</dimen>
 
     <dimen name="dialer_main_favorite_speed_padding">10dp</dimen>
+    <dimen name="dialer_recent_head_text_size">12sp</dimen>
+    <dimen name="dialer_recent_head_text_margin_start">24dp</dimen>
+    <dimen name="dialer_recent_head_text_height">21dp</dimen>
+    <dimen name="recent_data_item_image_width">32dp</dimen>
+    <dimen name="recent_data_item_image_height">@dimen/recent_data_item_image_width</dimen>
+    <dimen name="recent_data_item_call_name_size">14sp</dimen>
+
+    <dimen name="recent_data_item_call_type_margin_start">5dp</dimen>
+    <dimen name="recent_data_item_call_name_margin_bottom">4dp</dimen>
+    <dimen name="recent_data_item_call_number_size">12sp</dimen>
+    <dimen name="recent_data_item_tel_number_margin_start">3dp</dimen>
+    <dimen name="recent_data_item_call_type_width">10dp</dimen>
+    <dimen name="recent_data_item_call_type_height">@dimen/recent_data_item_call_type_width</dimen>
+    <dimen name="recent_data_item_call_duration_margin_bottom">4dp</dimen>
 </resources>

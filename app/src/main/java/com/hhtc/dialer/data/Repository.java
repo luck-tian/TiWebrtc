@@ -3,6 +3,7 @@ package com.hhtc.dialer.data;
 import com.hhtc.dialer.data.bean.CollectFavorite;
 import com.hhtc.dialer.data.bean.DialerContact;
 import com.hhtc.dialer.data.bean.RecentCallLog;
+import com.hhtc.dialer.main.recent.RecentModel;
 import com.hhtc.dialer.thread.TelephoneThreadDispatcher;
 
 import java.util.List;
@@ -86,13 +87,14 @@ public class Repository {
     }
 
 
-    public void getAllCallLog(final LoadDataCallback<RecentCallLog> callback) {
+    public void getAllCallLog(final LoadDataCallback<RecentModel> callback) {
         TelephoneThreadDispatcher.getInstance().execute(() -> {
             List<RecentCallLog> allCallLog = database.getRecentCallLogDao().getAllCallLog();
+            //排序 分类
             if (allCallLog.isEmpty()) {
                 callback.onDataNotAvailable();
             } else {
-                callback.onTasksLoaded(allCallLog);
+                callback.onTasksLoaded(null);
             }
         }, TelephoneThreadDispatcher.DispatcherType.WORK);
     }

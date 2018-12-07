@@ -1,8 +1,9 @@
-package com.hhtc.dialer.main.collects;
+package com.hhtc.dialer.main.recent;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import com.hhtc.dialer.R;
 import com.hhtc.dialer.adapter.FavoriteItemDecoration;
 import com.hhtc.dialer.data.bean.CollectFavorite;
+import com.hhtc.dialer.data.bean.RecentCallLog;
 import com.hhtc.dialer.main.holder.CollectsViewHolder;
 import com.hhtc.dialer.main.holder.EmptyHolder;
 
@@ -17,26 +19,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CollectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int LOADING_TYPE = 0;
     public static final int EMPTY_TYPE = 1;
     public static final int NORMAL_TYPE = 2;
 
+    public static final int HEAD_DATA = 3;
+    public static final int NORMAL_DATA = 4;
+
     private int type = LOADING_TYPE;
 
     private Context context;
 
-    private List<CollectFavorite> models = new ArrayList<>();
+    private List<RecentModel> models = new ArrayList<>();
 
-    public CollectsAdapter(Context context) {
+    public RecentAdapter(Context context) {
         this.context = context;
         models.add(null);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return type;
+        if (type == NORMAL_TYPE) {
+            return models.get(position).getType();
+        } else {
+            return type;
+        }
     }
 
     @NonNull
@@ -49,9 +58,12 @@ public class CollectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 holder = new EmptyHolder(inflater.inflate(R.layout.data_loading_layout, viewGroup, false));
                 break;
             case EMPTY_TYPE:
-                holder = new EmptyHolder(inflater.inflate(R.layout.favorite_data_empty_layout, viewGroup, false));
+                holder = new EmptyHolder(inflater.inflate(R.layout.recent_data_empty_layout, viewGroup, false));
                 break;
-            case NORMAL_TYPE:
+            case HEAD_DATA: //下面有两种
+                holder = new CollectsViewHolder(inflater.inflate(R.layout.recent_data_empty_layout, viewGroup, false));
+                break;
+            case NORMAL_DATA: //下面有两种
                 holder = new CollectsViewHolder(inflater.inflate(R.layout.collect_item_layout, viewGroup, false));
                 break;
             default:
@@ -63,12 +75,12 @@ public class CollectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof CollectsViewHolder) {
-            ((CollectsViewHolder) viewHolder).bindData(models.get(position));
+            //((CollectsViewHolder) viewHolder).bindData(models.get(position));
         }
     }
 
 
-    public void setModels(List<CollectFavorite> models) {
+    public void setModels(List<RecentModel> models) {
         if (Objects.isNull(models)) {
             type = EMPTY_TYPE;
         } else {
@@ -85,32 +97,8 @@ public class CollectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public void bindRecycler(RecyclerView collect_view) {
-        collect_view.addItemDecoration(new FavoriteItemDecoration(2,2,true));
+        collect_view.addItemDecoration(new FavoriteItemDecoration(1, 2, true));
         collect_view.setAdapter(this);
     }
 
-    RecyclerView.LayoutManager getLayoutManager(Context context) {
-        GridLayoutManager layoutManager = new GridLayoutManager(context, 2 /* spanCount */);
-        layoutManager.setSpanSizeLookup(
-                new GridLayoutManager.SpanSizeLookup() {
-                    @Override
-                    public int getSpanSize(int position) {
-                        return CollectsAdapter.this.getSpanSize();
-                    }
-                });
-        return layoutManager;
-    }
-
-    int getSpanSize() {
-        switch (type) {
-            case NORMAL_TYPE:
-
-                return 1;
-            case EMPTY_TYPE:
-            case LOADING_TYPE:
-                return 2;
-            default:
-                return 2;
-        }
-    }
 }

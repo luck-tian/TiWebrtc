@@ -1,4 +1,4 @@
-package com.hhtc.dialer.main.collects;
+package com.hhtc.dialer.main.contacts;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CollectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int LOADING_TYPE = 0;
     public static final int EMPTY_TYPE = 1;
@@ -29,7 +29,7 @@ public class CollectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private List<CollectFavorite> models = new ArrayList<>();
 
-    public CollectsAdapter(Context context) {
+    public ContactAdapter(Context context) {
         this.context = context;
         models.add(null);
     }
@@ -95,7 +95,7 @@ public class CollectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        return CollectsAdapter.this.getSpanSize();
+                        return ContactAdapter.this.getSpanSize();
                     }
                 });
         return layoutManager;

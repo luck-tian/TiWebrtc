@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/time_classification"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialer_recent_head_text_height"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/dialer_recent_head_text_margin_start"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="left|top"
+        android:textColor="@color/dialer_recent_head_text_color"
+        android:textSize="@dimen/dialer_recent_head_text_size" />
+
+</android.support.constraint.ConstraintLayout>
