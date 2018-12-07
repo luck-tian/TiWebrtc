@@ -7,4 +7,7 @@
         <item>All Contacts</item>
     </string-array>
 
+    <string name="dialer_main_favorite_empty">No one is on your speed dial yet</string>
+
+    <string name="base_loading_data_tips">loading...</string>
 </resources>

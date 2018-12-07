@@ -51,6 +51,10 @@ public class CollectFavorite {
     private int mType;
 
 
+    public CollectFavorite(){
+
+    }
+
     @Ignore
     public CollectFavorite(@NonNull String name,
                            @NonNull String tel,
@@ -70,39 +74,47 @@ public class CollectFavorite {
     }
 
 
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long mId) {
+        this.mId = mId;
+    }
+
     @NonNull
-    public String getmName() {
+    public String getName() {
         return mName;
     }
 
-    public void setmName(@NonNull String mName) {
+    public void setName(@NonNull String mName) {
         this.mName = mName;
     }
 
     @NonNull
-    public String getmTel() {
+    public String getTel() {
         return mTel;
     }
 
-    public void setmTel(@NonNull String mTel) {
+    public void setTel(@NonNull String mTel) {
         this.mTel = mTel;
     }
 
     @Nullable
-    public String getmVideo() {
+    public String getVideo() {
         return mVideo;
     }
 
-    public void setmVideo(@Nullable String mVideo) {
+    public void setVideo(@Nullable String mVideo) {
         this.mVideo = mVideo;
     }
 
     @NonNull
-    public int getmType() {
+    public int getType() {
         return mType;
     }
 
-    public void setmType(@NonNull int mType) {
+    public void setType(@NonNull int mType) {
         this.mType = mType;
     }
 

@@ -98,9 +98,9 @@ public class Repository {
     }
 
 
-    public void getAllCallLogByName(String name, final LoadDataCallback<DialerContact> callback) {
+    public void getAllCallLogByName(String name, final LoadDataCallback<RecentCallLog> callback) {
         TelephoneThreadDispatcher.getInstance().execute(() -> {
-            List<DialerContact> allCallLogByName = database.getRecentCallLogDao().getAllCallLogByName(name);
+            List<RecentCallLog> allCallLogByName = database.getRecentCallLogDao().getAllCallLogByName(name);
             if (allCallLogByName.isEmpty()) {
                 callback.onDataNotAvailable();
             } else {

@@ -59,6 +59,10 @@ public class DialerContact {
     @ColumnInfo(name = "contact_type")
     private int mType;
 
+    public DialerContact(){
+
+    }
+
     @Ignore
     public DialerContact(String name,
                          String tel,
@@ -77,59 +81,67 @@ public class DialerContact {
     }
 
 
-    public String getmName() {
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long mId) {
+        this.mId = mId;
+    }
+
+    public String getName() {
         return mName;
     }
 
-    public void setmName(String mName) {
+    public void setName(String mName) {
         this.mName = mName;
     }
 
-    public String getmTel() {
+    public String getTel() {
         return mTel;
     }
 
-    public void setmTel(String mTel) {
+    public void setTel(String mTel) {
         this.mTel = mTel;
     }
 
-    public String getmMessage() {
+    public String getMessage() {
         return mMessage;
     }
 
-    public void setmMessage(String mMessage) {
+    public void setMessage(String mMessage) {
         this.mMessage = mMessage;
     }
 
-    public String getmEmail() {
+    public String getEmail() {
         return mEmail;
     }
 
-    public void setmEmail(String mEmail) {
+    public void setEmail(String mEmail) {
         this.mEmail = mEmail;
     }
 
-    public String getmVideo() {
+    public String getVideo() {
         return mVideo;
     }
 
-    public void setmVideo(String mVideo) {
+    public void setVideo(String mVideo) {
         this.mVideo = mVideo;
     }
 
-    public String getmPhoto() {
+    public String getPhoto() {
         return mPhoto;
     }
 
-    public void setmPhoto(String mPhoto) {
+    public void setPhoto(String mPhoto) {
         this.mPhoto = mPhoto;
     }
 
-    public int getmType() {
+    public int getType() {
         return mType;
     }
 
-    public void setmType(int mType) {
+    public void setType(int mType) {
         this.mType = mType;
     }
 

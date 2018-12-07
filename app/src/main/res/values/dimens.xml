@@ -14,4 +14,14 @@
     <dimen name="dialer_main_tab_layout_margin_top">8dp</dimen>
     <dimen name="dialer_main_tab_layout_indicator_height">0.5dp</dimen>
     <dimen name="dialer_main_action_button_margin_bottom">16dp</dimen>
+
+
+    <dimen name="dialer_main_favorite_empty_tips_margin_top">10dp</dimen>
+    <dimen name="dialer_main_favorite_empty_tips_text_size">18sp</dimen>
+
+    <dimen name="dialer_main_favorite_item_text_size">60sp</dimen>
+    <dimen name="dialer_main_favorite_name_text_size">16sp</dimen>
+    <dimen name="dialer_main_favorite_name_margin">15dp</dimen>
+
+    <dimen name="dialer_main_favorite_speed_padding">10dp</dimen>
 </resources>

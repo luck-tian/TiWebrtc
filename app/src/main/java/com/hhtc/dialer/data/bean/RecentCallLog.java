@@ -48,8 +48,12 @@ public class RecentCallLog {
     /**
      * 通话时间 接电话 未接电话 拨打电话 3中类型
      */
-    @ColumnInfo(name = "recent_time")
+    @ColumnInfo(name = "recent_type")
     private int mCallType;
+
+    public RecentCallLog(){
+
+    }
 
     @Ignore
     public RecentCallLog(String name,
@@ -67,43 +71,59 @@ public class RecentCallLog {
     }
 
 
-    public String getmName() {
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long mId) {
+        this.mId = mId;
+    }
+
+    public String getName() {
         return mName;
     }
 
-    public void setmName(String mName) {
+    public void setName(String mName) {
         this.mName = mName;
     }
 
-    public String getmTelOrVideo() {
+    public String getTel() {
+        return mTel;
+    }
+
+    public void setTel(String mTel) {
+        this.mTel = mTel;
+    }
+
+    public String getTelOrVideo() {
         return mTelOrVideo;
     }
 
-    public void setmTelOrVideo(String mTelOrVideo) {
+    public void setTelOrVideo(String mTelOrVideo) {
         this.mTelOrVideo = mTelOrVideo;
     }
 
-    public long getmCallTime() {
+    public long getCallTime() {
         return mCallTime;
     }
 
-    public void setmCallTime(long mCallTime) {
+    public void setCallTime(long mCallTime) {
         this.mCallTime = mCallTime;
     }
 
-    public String getmPhoto() {
+    public String getPhoto() {
         return mPhoto;
     }
 
-    public void setmPhoto(String mPhoto) {
+    public void setPhoto(String mPhoto) {
         this.mPhoto = mPhoto;
     }
 
-    public int getmCallType() {
+    public int getCallType() {
         return mCallType;
     }
 
-    public void setmCallType(int mCallType) {
+    public void setCallType(int mCallType) {
         this.mCallType = mCallType;
     }
 

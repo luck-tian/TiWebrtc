@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@drawable/dialer_favorite_item_ripple">
+
+
+    <TextView
+        android:id="@+id/first"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="W"
+        android:textColor="@color/dialer_main_favorite_item_text_color"
+        android:textSize="@dimen/dialer_main_favorite_item_text_size" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
+
+
+    <ImageView
+        android:id="@+id/speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dialer_main_favorite_empty_tips_margin_top"
+        android:background="@drawable/dialer_favorite_item_speed_ripple"
+        android:padding="@dimen/dialer_main_favorite_speed_padding"
+        android:src="@drawable/dialer_speed_icon"
+        app:layout_constraintBottom_toTopOf="@+id/favorite"
+        app:layout_constraintLeft_toRightOf="@id/line"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
+
+    <ImageView
+        android:id="@+id/favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dialer_main_favorite_empty_tips_margin_top"
+        android:padding="@dimen/dialer_main_favorite_speed_padding"
+        android:src="@drawable/dialer_main_collect_icon_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/line"
+        app:layout_constraintTop_toBottomOf="@+id/speed" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dialer_main_favorite_name_margin"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dialer_main_favorite_name_text_size"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

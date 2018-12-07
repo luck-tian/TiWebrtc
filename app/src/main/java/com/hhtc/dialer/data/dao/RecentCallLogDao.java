@@ -31,7 +31,7 @@ public interface RecentCallLogDao {
      * @return
      */
     @Query("SELECT * FROM recent_call_log WHERE recent_name=:name")
-    List<DialerContact> getAllCallLogByName(String name);
+    List<RecentCallLog> getAllCallLogByName(String name);
 
     /**
      * 插入

@@ -10,7 +10,9 @@
     <color name="dialer_main_tab_layout_item_normal">#40808080</color>
     <color name="dialer_main_floating_button_background">#0BCD74</color>
 
+    <color name="dialer_main_favorite_item_text_color">#A0FFFFFF</color>
 
+    <color name="dialer_main_favorite_item_background_color">#500000FF</color>
     <color name="white">#FFFFFF</color>
     <!-- 白色 -->
 

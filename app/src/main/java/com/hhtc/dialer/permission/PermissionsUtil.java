@@ -35,8 +35,6 @@ import static android.Manifest.permission.WRITE_VOICEMAIL;
 
 public class PermissionsUtil {
 
-    @VisibleForTesting
-    public static final String PREFERENCE_CAMERA_ALLOWED_BY_USER = "camera_allowed_by_user";
 
     private static final String PERMISSION_PREFERENCE = "dialer_permissions";
     private static final String CEQUINT_PERMISSION = "com.cequint.ecid.CALLER_ID_LOOKUP";
