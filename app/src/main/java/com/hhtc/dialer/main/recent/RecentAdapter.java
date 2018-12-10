@@ -34,6 +34,8 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private List<RecentModel> models = new ArrayList<>();
 
+    private RecyclerView collect_view;
+
     public RecentAdapter(Context context) {
         this.context = context;
         models.add(null);
@@ -61,21 +63,24 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 holder = new EmptyHolder(inflater.inflate(R.layout.recent_data_empty_layout, viewGroup, false));
                 break;
             case HEAD_DATA: //下面有两种
-                holder = new CollectsViewHolder(inflater.inflate(R.layout.recent_data_empty_layout, viewGroup, false));
+                holder = new HeadViewHolder(inflater.inflate(R.layout.recent_data_head_layout, viewGroup, false));
                 break;
             case NORMAL_DATA: //下面有两种
-                holder = new CollectsViewHolder(inflater.inflate(R.layout.collect_item_layout, viewGroup, false));
+                collect_view.setBackgroundColor(viewGroup.getContext().getColor(R.color.dialer_recent_recycler_view_background));
+                holder = new ItemViewHolder(inflater.inflate(R.layout.recent_data_itme_layout, viewGroup, false));
                 break;
             default:
-                throw new RuntimeException("collect adapter view type unaware!!");
+                throw new RuntimeException("recent adapter view type unaware!!");
         }
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        if (viewHolder instanceof CollectsViewHolder) {
-            //((CollectsViewHolder) viewHolder).bindData(models.get(position));
+        if (viewHolder instanceof HeadViewHolder) {
+            ((HeadViewHolder) viewHolder).bindData(models.get(position));
+        } else if (viewHolder instanceof ItemViewHolder) {
+            ((ItemViewHolder) viewHolder).bindData(models.get(position));
         }
     }
 
@@ -97,7 +102,8 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public void bindRecycler(RecyclerView collect_view) {
-        collect_view.addItemDecoration(new FavoriteItemDecoration(1, 2, true));
+        this.collect_view = collect_view;
+        collect_view.addItemDecoration(new FavoriteItemDecoration(1, 20, true));
         collect_view.setAdapter(this);
     }
 

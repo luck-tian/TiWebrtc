@@ -14,7 +14,7 @@ import com.hhtc.dialer.thread.TelephoneThreadDispatcher;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactsViewModel extends AndroidViewModel {
+public class CollectViewModel extends AndroidViewModel {
 
     /**
      * 收藏数据
@@ -23,7 +23,7 @@ public class ContactsViewModel extends AndroidViewModel {
 
     private Repository repository;
 
-    public ContactsViewModel(@NonNull Application application) {
+    public CollectViewModel(@NonNull Application application) {
         super(application);
         repository = Injection.provideTasksRepository(application.getApplicationContext());
     }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+
+    <path
+        android:fillColor="@color/dialer_main_tab_layout_item_normal"
+        android:strokeWidth="1"
+        android:pathData="M45 36C42.0138 34.4126 38.5131 31.5459 35 31.5725C32.1717 31.594 29.8939 33.7288
+27 32.6775C22.9823 31.2179 16.2028 24.6326 15.4375 20.2855C14.9919 17.7545
+17.084 15.6071 16.7323 12.9961C16.3189 9.92801 14.1828 6.84087 13 4C4.03587
+6.51804 2.75863 14.3061 6.32407 22C12.1014 34.4668 35.4723 56.4153 45 36z" />
+    <path
+        android:fillColor="#4a90e2"
+        android:strokeWidth="1"
+        android:pathData="M28.0193 6.02778C17.1128 11.7233 25.7681 29.2107 36.9815 23.6782C48.7326 17.8805
+39.6366 -0.0389175 28.0193 6.02778z" />
+
+    <path
+        android:fillColor="@color/white"
+        android:strokeWidth="1"
+        android:pathData="M26 17C30.2359 15.0231 33.0231 12.2359 35 8C29.2048 8.43722 26.4372 11.2048 26
+17z" />
+
+    <path
+        android:fillColor="@color/white"
+        android:strokeWidth="1"
+        android:pathData="M38 11C34.7962 14.2056 31.6112 17.2927 29 21C35.2321 20.9264 40.9559 18.1295 38
+11z" />
+
+</vector>

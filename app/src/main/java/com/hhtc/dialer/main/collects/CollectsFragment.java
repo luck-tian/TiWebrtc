@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.hhtc.dialer.R;
 import com.hhtc.dialer.data.bean.CollectFavorite;
@@ -18,7 +17,7 @@ import java.util.List;
 
 public class CollectsFragment extends DialerFragment {
 
-    private ContactsViewModel viewModel;
+    private CollectViewModel viewModel;
 
     private RecyclerView collect_view;
 
@@ -46,7 +45,7 @@ public class CollectsFragment extends DialerFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(ContactsViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(CollectViewModel.class);
         viewModel.getFavorite().observe(this, collectFavorites -> onChangedData(collectFavorites));
         viewModel.loadFavorite();
     }

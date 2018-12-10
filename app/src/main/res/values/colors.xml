@@ -16,6 +16,13 @@
 
     <color name="dialer_recent_head_text_color">#4D000000</color>
 
+    <color name="dialer_recent_item_name_color_call">#FF1E1E1E</color>
+
+    <color name="dialer_recent_item_name_color_not_answer">#FFEA4400</color>
+
+    <color name="dialer_recent_recycler_view_background">#EFEFEF</color>
+
+    <color name="dialer_contact_item_name_tips_color">#F0808080</color>
 
     <color name="white">#FFFFFF</color>
     <!-- 白色 -->

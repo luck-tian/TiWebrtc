@@ -11,22 +11,24 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.4" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/dialer_contact_empty"
         app:layout_constraintBottom_toTopOf="@id/line"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
+
     <TextView
-        android:id="@+id/load_tips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/base_loading_data_tips"
+        android:layout_marginTop="@dimen/dialer_main_favorite_empty_tips_margin_top"
+        android:text="@string/dialer_main_contact_empty"
+        android:textColor="@color/dialer_main_tab_layout_item_normal"
+        android:textSize="@dimen/dialer_main_favorite_empty_tips_text_size"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line" />
+
 </android.support.constraint.ConstraintLayout>

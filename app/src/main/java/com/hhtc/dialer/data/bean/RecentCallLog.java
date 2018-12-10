@@ -11,6 +11,20 @@ import java.util.Objects;
 @Entity(tableName = "recent_call_log")
 public class RecentCallLog {
 
+    @Ignore//呼入
+    public static final int INCOMING_TYPE = 1;
+    @Ignore//呼出
+    public static final int OUTGOING_TYPE = 2;
+    @Ignore//未接
+    public static final int MISSED_TYPE = 3;
+
+
+    //传统
+    public static final int TRADITIONAL = 4;
+    //Block chain
+    public static final int BLOCK_CHAIN = 5;
+
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "recent_id")
     private long mId;
@@ -51,7 +65,7 @@ public class RecentCallLog {
     @ColumnInfo(name = "recent_type")
     private int mCallType;
 
-    public RecentCallLog(){
+    public RecentCallLog() {
 
     }
 
