@@ -1,13 +1,17 @@
 package com.hhtc.dialer.data;
 
+import android.arch.lifecycle.LiveData;
+
 import com.hhtc.dialer.data.bean.CollectFavorite;
 import com.hhtc.dialer.data.bean.DialerContact;
 import com.hhtc.dialer.data.bean.RecentCallLog;
-import com.hhtc.dialer.main.contacts.ContactModle;
+import com.hhtc.dialer.data.dao.LoadLiveCallback;
+import com.hhtc.dialer.data.dao.LoadUniqueCallback;
 import com.hhtc.dialer.main.recent.RecentModel;
 import com.hhtc.dialer.thread.TelephoneThreadDispatcher;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Repository {
 
@@ -57,13 +61,24 @@ public class Repository {
     }
 
 
-    public void getAllContact(final LoadDataCallback<ContactModle> callback) {
+    public void loadContactLiveAll(final LoadLiveCallback<List<DialerContact>> callback) {
         TelephoneThreadDispatcher.getInstance().execute(() -> {
-            List<DialerContact> allContact = database.getDialerContactDao().getAllContact();
-            if (allContact.isEmpty()) {
+            if (callback != null) {
+                LiveData<List<DialerContact>> dialerContactLiveData = database.getDialerContactDao().loadContactLiveAll();
+                callback.onLiveData(dialerContactLiveData);
+            }
+        }, TelephoneThreadDispatcher.DispatcherType.WORK);
+
+    }
+
+
+    public void getContactById(long id, final LoadUniqueCallback<DialerContact> callback) {
+        TelephoneThreadDispatcher.getInstance().execute(() -> {
+            DialerContact contact = database.getDialerContactDao().loadContactById(id);
+            if (Objects.isNull(contact)) {
                 callback.onDataNotAvailable();
             } else {
-                callback.onTasksLoaded(null);
+                callback.onTasksLoaded(contact);
             }
         }, TelephoneThreadDispatcher.DispatcherType.WORK);
 
@@ -77,7 +92,17 @@ public class Repository {
 
 
     public void updateContact(DialerContact contact) {
-        TelephoneThreadDispatcher.getInstance().execute(() -> database.getDialerContactDao().updateContact(contact), TelephoneThreadDispatcher.DispatcherType.WORK);
+        TelephoneThreadDispatcher.getInstance().execute(() -> {
+            DialerContact contactByName = database.getDialerContactDao().loadContactByName(contact.getName());
+            if (Objects.isNull(contactByName)) {
+                database.getDialerContactDao().insertContact(contact);
+            } else {
+                contact.setId(contactByName.getId());
+                database.getDialerContactDao().insertContact(contact);
+            }
+
+
+        }, TelephoneThreadDispatcher.DispatcherType.WORK);
 
     }
 

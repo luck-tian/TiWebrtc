@@ -1,7 +1,7 @@
 package com.hhtc.dialer;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -13,11 +13,13 @@ import android.widget.TextView;
 import com.hhtc.dialer.animation.DialerActionButtonAnimation;
 import com.hhtc.dialer.main.DialerFragment;
 import com.hhtc.dialer.main.DialerTabPagerAdapter;
+import com.hhtc.dialer.main.FloatingViewModel;
 import com.hhtc.dialer.main.TabSelectedListenerImpl;
 import com.hhtc.dialer.main.collects.CollectsFragment;
 import com.hhtc.dialer.main.contacts.ContactsFragment;
 import com.hhtc.dialer.main.recent.RecentFragment;
 import com.hhtc.dialer.permission.PermissionsUtil;
+import com.hhtc.dialer.utils.IntentUitls;
 import com.hhtc.dialer.view.TableViewPager;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class DialerActivity extends AppCompatActivity {
     private FloatingActionButton action_button;
     private DialerTabPagerAdapter adapter;
     private String[] stringTips;
+    private FloatingViewModel mSharedViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +77,20 @@ public class DialerActivity extends AppCompatActivity {
         Objects.requireNonNull(page_navigation.getTabAt(2)).setIcon(R.drawable.dialer_main_contacts_icon_selector);
 
         page_navigation.addOnTabSelectedListener(tabSelectedListener);
-        action_button.setOnClickListener(actionButtonListener);
+        action_button.setOnClickListener(this::actionButton);
         stringTips = getResources().getStringArray(R.array.dialer_title_tips);
+
+        mSharedViewModel = ViewModelProviders.of(this).get(FloatingViewModel.class);
+        mSharedViewModel.getFloating().observe(this, aBoolean -> {
+            if (aBoolean) {
+                DialerActionButtonAnimation.scaleOut(action_button);
+            } else {
+                DialerActionButtonAnimation.scaleIn(action_button);
+            }
+        });
+        add_contacts.setOnClickListener(this::addContact);
     }
+
 
     private List<DialerFragment> createPager() {
         List<DialerFragment> pagers = new ArrayList<>();
@@ -98,12 +112,13 @@ public class DialerActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener actionButtonListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            DialerActionButtonAnimation.scaleOut(v);
-            //启动拨号界面
-        }
-    };
+
+    private void actionButton(View view) {
+
+    }
+
+    private void addContact(View view) {
+        IntentUitls.startAddContact(DialerActivity.this);
+    }
 
 }

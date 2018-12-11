@@ -2,7 +2,7 @@ package com.hhtc.dialer.main.contacts;
 
 import com.hhtc.dialer.data.bean.DialerContact;
 
-public class ContactModle {
+public class ContactModel {
 
     /**
      * 数据实体

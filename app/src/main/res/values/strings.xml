@@ -13,4 +13,19 @@
 
     <string name="base_loading_data_tips">loading...</string>
     <string name="dialer_recent_item_call_not_save">Not saved</string>
+    <string name="add_contact_button_save">SAVE</string>
+    <string name="add_contact_button_cancel">CANCEL</string>
+
+    <string name="add_contact_name">Name</string>
+    <string name="add_contact_phone">Phone</string>
+    <string name="add_contact_message">Message</string>
+    <string name="add_contact_mail">Mail</string>
+    <string name="add_contact_video">Video</string>
+
+    <string name="add_contact_phone_format">call.%s</string>
+    <string name="add_contact_message_format">message.%s</string>
+    <string name="add_contact_mail_format">mail.%s</string>
+    <string name="add_contact_video_format">video.%s</string>
+
+    <string name="add_contact_input_name_tips">name cannot be empty</string>
 </resources>

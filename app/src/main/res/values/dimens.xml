@@ -49,4 +49,11 @@
     <dimen name="dialer_contact_index_text_size">12sp</dimen>
     <dimen name="dialer_contact_index_tips_size">50dp</dimen>
     <dimen name="dialer_contact_index_tips_text_size">26sp</dimen>
+    <dimen name="add_contact_button_text_size">14sp</dimen>
+    <dimen name="add_contact_button_size">56dp</dimen>
+    <dimen name="add_contact_image_size">56dp</dimen>
+    <dimen name="add_contact_image_margin">28dp</dimen>
+    <dimen name="add_contact_input_text_size">14sp</dimen>
+    <dimen name="add_contact_input_margin">16dp</dimen>
+    <dimen name="add_contact_input_margin_top">30dp</dimen>
 </resources>

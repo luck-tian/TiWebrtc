@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".add.ContactAddOrEditActivity">
+
+
+    <Button
+        android:id="@+id/cancel"
+        style="@style/add_contact_button"
+        android:onClick="cancel"
+        android:text="@string/add_contact_button_cancel"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/save"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/save"
+        style="@style/add_contact_button"
+        android:onClick="save"
+        android:text="@string/add_contact_button_save"
+        app:layout_constraintLeft_toRightOf="@id/cancel"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/contact_img"
+        android:layout_width="@dimen/add_contact_image_size"
+        android:layout_height="@dimen/add_contact_image_size"
+        android:layout_marginTop="@dimen/add_contact_image_margin"
+        android:src="@drawable/telephone_call_head_portrait_traditional_test"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cancel" />
+
+    <com.hhtc.dialer.view.AddContactInputView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/add_contact_input_margin"
+        android:layout_marginTop="@dimen/add_contact_input_margin_top"
+        android:inputType="textNoSuggestions"
+        app:hint="@string/add_contact_name"
+        app:layout_constraintTop_toBottomOf="@id/contact_img"
+        app:textColor="@color/dialer_main_title_color"
+        app:textColorHint="@color/dialer_recent_head_text_color"
+        app:textSize="@dimen/add_contact_input_text_size" />
+
+
+    <com.hhtc.dialer.view.AddContactInputView
+        android:id="@+id/phone"
+        style="@style/add_contact_input"
+        app:hint="@string/add_contact_phone"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:textColor="@color/dialer_main_title_color"
+        app:textColorHint="@color/dialer_recent_head_text_color"
+        app:textSize="@dimen/add_contact_input_text_size" />
+
+    <com.hhtc.dialer.view.AddContactInputView
+        android:id="@+id/massage"
+        style="@style/add_contact_input"
+        app:hint="@string/add_contact_message"
+        app:layout_constraintTop_toBottomOf="@id/phone"
+        app:textColor="@color/dialer_main_title_color"
+        app:textColorHint="@color/dialer_recent_head_text_color"
+        app:textSize="@dimen/add_contact_input_text_size" />
+
+    <com.hhtc.dialer.view.AddContactInputView
+        android:id="@+id/mail"
+        style="@style/add_contact_input"
+        app:hint="@string/add_contact_mail"
+        app:layout_constraintTop_toBottomOf="@id/massage"
+        app:textColor="@color/dialer_main_title_color"
+        app:textColorHint="@color/dialer_recent_head_text_color"
+        app:textSize="@dimen/add_contact_input_text_size" />
+
+    <com.hhtc.dialer.view.AddContactInputView
+        android:id="@+id/video"
+        style="@style/add_contact_input"
+        app:hint="@string/add_contact_video"
+        app:layout_constraintTop_toBottomOf="@id/mail"
+        app:textColor="@color/dialer_main_title_color"
+        app:textColorHint="@color/dialer_recent_head_text_color"
+        app:textSize="@dimen/add_contact_input_text_size" />
+
+</android.support.constraint.ConstraintLayout>

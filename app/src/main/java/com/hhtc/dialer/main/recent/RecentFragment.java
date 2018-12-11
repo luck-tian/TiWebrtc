@@ -47,7 +47,7 @@ public class RecentFragment extends DialerFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(RecentViewModel.class);
-        mViewModel.getCallLog().observe(this, recentCallLogs -> onChangedData(recentCallLogs));
+        mViewModel.getCallLog().observe(this, this::onChangedData);
         mViewModel.loadCallLog();
     }
 

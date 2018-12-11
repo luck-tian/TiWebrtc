@@ -1,26 +1,18 @@
 package com.hhtc.dialer.main.contacts;
 
 import android.content.Context;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhtc.dialer.R;
 import com.hhtc.dialer.adapter.ContactItemDecoration;
-import com.hhtc.dialer.adapter.FavoriteItemDecoration;
-import com.hhtc.dialer.data.bean.DialerContact;
-import com.hhtc.dialer.main.holder.CollectsViewHolder;
 import com.hhtc.dialer.main.holder.EmptyHolder;
-import com.hhtc.dialer.utils.LogUtil;
 import com.hhtc.dialer.view.DialerContactBarView;
 
 import java.util.ArrayList;
@@ -38,7 +30,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private Context context;
 
-    private List<ContactModle> models = new ArrayList<>();
+    private List<ContactModel> models = new ArrayList<>();
 
     private ContactItemDecoration contactItemDecoration;
 
@@ -46,9 +38,12 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private TextView tipsView;
 
-    public ContactAdapter(Context context) {
+    private ActionFloatingButton floatingButton;
+
+    public ContactAdapter(Context context, ActionFloatingButton floatingButton) {
         this.context = context;
         models.add(null);
+        this.floatingButton = floatingButton;
     }
 
     @Override
@@ -85,8 +80,8 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
-    public void setModels(List<ContactModle> models) {
-        if (Objects.isNull(models)) {
+    public void setModels(List<ContactModel> models) {
+        if (Objects.isNull(models)||models.isEmpty()) {
             type = EMPTY_TYPE;
         } else {
             type = NORMAL_TYPE;
@@ -124,12 +119,13 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (position != -1) {
             linearLayoutManager.scrollToPositionWithOffset(position, 0);
         }
+        floatingButton.show();
     }
 
     private int getPosByTag(String text) {
         int result = -1;
         for (int i = 0; i < models.size(); i++) {
-            ContactModle contactModle = models.get(i);
+            ContactModel contactModle = models.get(i);
             if (!Objects.isNull(contactModle) && TextUtils.equals(models.get(i).getClassify(), text)) {
                 result = i;
             }
@@ -141,5 +137,8 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onMotionEventEnd() {
         tipsView.setVisibility(View.GONE);
+        floatingButton.hind();
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.hhtc.dialer.data.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -17,13 +18,31 @@ public interface DialerContactDao {
 
 
     /**
-     * 查询所有联系人
+     * 查询所有
      *
      * @return
      */
     @Query("SELECT * FROM dialer_contact")
-    List<DialerContact> getAllContact();
+    LiveData<List<DialerContact>> loadContactLiveAll();
 
+    /**
+     * 根据id🍵
+     *
+     * @param id
+     * @return
+     */
+    @Query("SELECT * FROM dialer_contact WHERE contact_id=:id")
+    DialerContact loadContactById(long id);
+
+
+    /**
+     * 根据Name
+     *
+     * @param name
+     * @return
+     */
+    @Query("SELECT * FROM dialer_contact WHERE contact_name=:name")
+    DialerContact loadContactByName(String name);
 
     /**
      * 插入

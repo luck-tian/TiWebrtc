@@ -14,7 +14,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 import com.hhtc.dialer.R;
-import com.hhtc.dialer.main.contacts.ContactModle;
+import com.hhtc.dialer.main.contacts.ContactModel;
 import com.hhtc.dialer.utils.LogUtil;
 
 import java.util.List;
@@ -33,10 +33,10 @@ public class ContactItemDecoration extends RecyclerView.ItemDecoration {
     private TextPaint mTextPaint;
     private Rect mBounds;
     private int mTitleSize;
-    private List<ContactModle> models;
+    private List<ContactModel> models;
     private Context context;
 
-    public ContactItemDecoration(Context context, List<ContactModle> models) {
+    public ContactItemDecoration(Context context, List<ContactModel> models) {
         this.models = models;
         this.context = context;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -97,11 +97,11 @@ public class ContactItemDecoration extends RecyclerView.ItemDecoration {
                 (position - 1) >= 0;
     }
 
-    private ContactModle lastModel(int position) {
+    private ContactModel lastModel(int position) {
         return models.get(position - 1);
     }
 
-    private ContactModle currentModel(int position) {
+    private ContactModel currentModel(int position) {
         return models.get(position);
     }
 

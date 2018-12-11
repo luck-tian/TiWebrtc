@@ -109,7 +109,7 @@ public class LogUtil {
             @Nullable Object... args) {
         String formattedMsg;
         boolean hasArgs = args == null || args.length > 0;
-        if ((level >= android.util.Log.INFO) || android.util.Log.isLoggable(tag, level)) {
+        if ((level >= android.util.Log.VERBOSE) || android.util.Log.isLoggable(tag, level)) {
             formattedMsg = localTag;
             if (!TextUtils.isEmpty(msg)) {
                 formattedMsg += SEPARATOR + (hasArgs ? String.format(msg, args) : msg);

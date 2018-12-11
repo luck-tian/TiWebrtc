@@ -12,15 +12,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hhtc.dialer.R;
-import com.hhtc.dialer.data.bean.DialerContact;
 import com.hhtc.dialer.main.DialerFragment;
+import com.hhtc.dialer.main.FloatingViewModel;
 import com.hhtc.dialer.view.DialerContactBarView;
 
 import java.util.List;
+import java.util.Objects;
 
 
-public class ContactsFragment extends DialerFragment {
+public class ContactsFragment extends DialerFragment implements ActionFloatingButton {
 
+    private static final String TAG = "ContactsFragment";
     private ContactsViewModel mViewModel;
 
     private RecyclerView content_contact;
@@ -30,6 +32,8 @@ public class ContactsFragment extends DialerFragment {
     private DialerContactBarView contact_bar_view;
 
     private TextView index_bar_tips;
+
+    private FloatingViewModel mSharedViewModel;
 
     public static ContactsFragment newInstance() {
         return new ContactsFragment();
@@ -48,20 +52,31 @@ public class ContactsFragment extends DialerFragment {
         content_contact = view.findViewById(R.id.content_contact);
         contact_bar_view = view.findViewById(R.id.contact_bar_view);
         index_bar_tips = view.findViewById(R.id.index_bar_tips);
-        adapter = new ContactAdapter(getContext());
-        adapter.bindRecycler(content_contact,new LinearLayoutManager(getContext()),contact_bar_view,index_bar_tips);
+        adapter = new ContactAdapter(getContext(), this);
+        adapter.bindRecycler(content_contact, new LinearLayoutManager(getContext()), contact_bar_view, index_bar_tips);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ContactsViewModel.class);
-        mViewModel.getContacts().observe(this, dialerContacts -> onChangedData(dialerContacts));
+        mViewModel = ViewModelProviders.of(this, new ContactFactory(this)).get(ContactsViewModel.class);
+        mSharedViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(FloatingViewModel.class);
+        mViewModel.getContacts().observe(this, this::onChangedData);
         mViewModel.loadContact();
     }
 
 
-    private void onChangedData(List<ContactModle> dialerContacts) {
+    private void onChangedData(List<ContactModel> dialerContacts) {
         adapter.setModels(dialerContacts);
+    }
+
+    @Override
+    public void show() {
+        mSharedViewModel.setAction(true);
+    }
+
+    @Override
+    public void hind() {
+        mSharedViewModel.setAction(false);
     }
 }

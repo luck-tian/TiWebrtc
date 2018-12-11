@@ -46,7 +46,7 @@ public class CollectsFragment extends DialerFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(CollectViewModel.class);
-        viewModel.getFavorite().observe(this, collectFavorites -> onChangedData(collectFavorites));
+        viewModel.getFavorite().observe(this, this::onChangedData);
         viewModel.loadFavorite();
     }
 
