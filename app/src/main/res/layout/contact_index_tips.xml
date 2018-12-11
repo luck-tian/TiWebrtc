@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/index_bar_tips"
+    android:layout_width="@dimen/dialer_contact_index_tips_size"
+    android:layout_height="@dimen/dialer_contact_index_tips_size"
+    android:layout_gravity="center"
+    android:background="@drawable/dialer_contact_index_bar_background"
+    android:gravity="center"
+    android:text="A"
+    android:textColor="@color/white"
+    android:textSize="@dimen/dialer_contact_index_tips_text_size" />

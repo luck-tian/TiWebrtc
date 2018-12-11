@@ -45,4 +45,8 @@
     <dimen name="dialer_contact_item_image_margin">8dp</dimen>
     <dimen name="dialer_contact_item_image_size">25dp</dimen>
     <dimen name="dialer_contact_item_padding">5dp</dimen>
+    <dimen name="dialer_contact_index_bar_width">24dp</dimen>
+    <dimen name="dialer_contact_index_text_size">12sp</dimen>
+    <dimen name="dialer_contact_index_tips_size">50dp</dimen>
+    <dimen name="dialer_contact_index_tips_text_size">26sp</dimen>
 </resources>
