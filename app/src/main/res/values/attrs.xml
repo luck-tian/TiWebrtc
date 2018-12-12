@@ -17,4 +17,21 @@
         <attr name="android:inputType" />
         <attr name="hint" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="ContactShowInfoView">
+        <attr name="showInfoSrc" format="color|reference" />
+        <attr name="showInfoText" format="string" />
+        <attr name="showInfoTextSize" format="dimension" />
+        <attr name="showInfoIconSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ContactShowInfoActionView">
+        <attr name="showActionHint" format="string" />
+        <attr name="showActionHintColor" format="color" />
+        <attr name="showActionHintSize" format="dimension" />
+        <attr name="showActionText" format="string" />
+        <attr name="showActionTextColor" format="color" />
+        <attr name="showActionTextSize" format="dimension" />
+        <attr name="showActionLineColor" format="color" />
+    </declare-styleable>
 </resources>

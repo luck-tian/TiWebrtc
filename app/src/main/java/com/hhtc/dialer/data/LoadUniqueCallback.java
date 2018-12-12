@@ -1,4 +1,4 @@
-package com.hhtc.dialer.data.dao;
+package com.hhtc.dialer.data;
 
 
 public interface LoadUniqueCallback<T> {

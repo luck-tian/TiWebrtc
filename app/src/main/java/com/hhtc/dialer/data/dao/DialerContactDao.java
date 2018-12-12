@@ -32,7 +32,7 @@ public interface DialerContactDao {
      * @return
      */
     @Query("SELECT * FROM dialer_contact WHERE contact_id=:id")
-    DialerContact loadContactById(long id);
+    LiveData<DialerContact> loadContactById(long id);
 
 
     /**

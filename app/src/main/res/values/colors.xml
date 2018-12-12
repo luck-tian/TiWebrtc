@@ -30,6 +30,8 @@
 
     <color name="dialer_contact_item_background">#30808080</color>
 
+    <color name="transparency">#00000000</color>
+
     <color name="white">#FFFFFF</color>
     <!-- 白色 -->
 

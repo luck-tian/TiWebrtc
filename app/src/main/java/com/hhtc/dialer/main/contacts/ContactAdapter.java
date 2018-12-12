@@ -85,7 +85,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             type = EMPTY_TYPE;
         } else {
             type = NORMAL_TYPE;
-            this.models.remove(0);
+            this.models.clear();
             this.models.addAll(models);
         }
         notifyDataSetChanged();

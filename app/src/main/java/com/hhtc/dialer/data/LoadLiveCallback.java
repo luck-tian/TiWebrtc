@@ -1,4 +1,4 @@
-package com.hhtc.dialer.data.dao;
+package com.hhtc.dialer.data;
 
 
 import android.arch.lifecycle.LiveData;

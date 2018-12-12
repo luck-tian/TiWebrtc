@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".show.ShowContactInfoActivity">
+
+
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialer_back_action_button_background"
+        android:onClick="actionFinish"
+        android:src="@drawable/dialer_back_action_button"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/edit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialer_back_action_button_background"
+        android:clickable="true"
+        android:enabled="true"
+        android:focusable="true"
+        android:onClick="actionEdit"
+        android:text="@string/show_contact_info_edit"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toRightOf="@id/back"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/user_photo"
+        android:layout_width="@dimen/show_contact_photo"
+        android:layout_height="@dimen/show_contact_photo"
+        android:layout_marginTop="@dimen/show_contact_photo_margin"
+        android:src="@drawable/telephone_call_head_portrait_traditional_test"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/show_contact_user_name"
+        android:gravity="center"
+        android:text="name"
+        android:textColor="@color/add_contact_button_text"
+        android:textSize="@dimen/show_contact_user_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_photo" />
+
+
+    <com.hhtc.dialer.view.ContactShowInfoView
+        android:id="@+id/share_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/show_contact_share_image_margin_top"
+        android:background="@drawable/dialer_contact_item_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="showShare"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/favorite_image"
+        app:layout_constraintTop_toBottomOf="@id/username"
+        app:showInfoIconSize="@dimen/dialer_main_title_image_button_width"
+        app:showInfoSrc="@drawable/dialer_show_contact_info_share_background"
+        app:showInfoText="@string/show_contact_info_share"
+        app:showInfoTextSize="@dimen/dialer_recent_head_text_size" />
+
+
+    <com.hhtc.dialer.view.ContactShowInfoView
+        android:id="@+id/favorite_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/show_contact_share_image_margin_top"
+        android:background="@drawable/dialer_contact_item_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="showFavorite"
+        app:layout_constraintLeft_toRightOf="@id/share_image"
+        app:layout_constraintRight_toLeftOf="@id/block_image"
+        app:layout_constraintTop_toBottomOf="@id/username"
+        app:showInfoIconSize="@dimen/dialer_main_title_image_button_width"
+        app:showInfoSrc="@drawable/dialer_show_contact_info_favorite_background"
+        app:showInfoText="@string/show_contact_info_favorite"
+        app:showInfoTextSize="@dimen/dialer_recent_head_text_size" />
+
+
+    <com.hhtc.dialer.view.ContactShowInfoView
+        android:id="@+id/block_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/show_contact_share_image_margin_top"
+        android:background="@drawable/dialer_contact_item_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="showBlock"
+        app:layout_constraintLeft_toRightOf="@id/favorite_image"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username"
+        app:showInfoIconSize="@dimen/dialer_main_title_image_button_width"
+        app:showInfoSrc="@drawable/dialer_show_contact_info_block_background"
+        app:showInfoText="@string/show_contact_info_block"
+        app:showInfoTextSize="@dimen/dialer_recent_head_text_size" />
+
+
+    <com.hhtc.dialer.view.ContactShowInfoActionView
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/show_contact_info_action"
+        android:background="@drawable/dialer_show_contact_info_action_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="phoneAction"
+        android:paddingTop="@dimen/show_contact_info_action_padding_bottom"
+        android:paddingBottom="@dimen/show_contact_info_action_padding_bottom"
+        app:layout_constraintTop_toBottomOf="@id/share_image"
+        app:showActionHint="@string/add_contact_phone"
+        app:showActionHintColor="@color/dialer_main_tab_layout_item_normal"
+        app:showActionHintSize="@dimen/show_contact_info_action_hint_size"
+        app:showActionLineColor="@color/dialer_main_tab_layout_item_normal"
+        app:showActionText="@string/app_name"
+        app:showActionTextColor="@color/black"
+        app:showActionTextSize="@dimen/show_contact_info_action_text_size"
+        tools:ignore="RtlSymmetry" />
+
+    <com.hhtc.dialer.view.ContactShowInfoActionView
+        android:id="@+id/massage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/show_contact_info_action"
+        android:background="@drawable/dialer_show_contact_info_action_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="massageAction"
+        android:paddingTop="@dimen/show_contact_info_action_padding_bottom"
+        android:paddingBottom="@dimen/show_contact_info_action_padding_bottom"
+        app:layout_constraintTop_toBottomOf="@id/phone"
+        app:showActionHint="@string/add_contact_message"
+        app:showActionHintColor="@color/dialer_main_tab_layout_item_normal"
+        app:showActionHintSize="@dimen/show_contact_info_action_hint_size"
+        app:showActionLineColor="@color/dialer_main_tab_layout_item_normal"
+        app:showActionText="@string/app_name"
+        app:showActionTextColor="@color/black"
+        app:showActionTextSize="@dimen/show_contact_info_action_text_size"
+        tools:ignore="RtlSymmetry" />
+
+    <com.hhtc.dialer.view.ContactShowInfoActionView
+        android:id="@+id/mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/show_contact_info_action"
+        android:background="@drawable/dialer_show_contact_info_action_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="mailAction"
+        android:paddingTop="@dimen/show_contact_info_action_padding_bottom"
+        android:paddingBottom="@dimen/show_contact_info_action_padding_bottom"
+        app:layout_constraintTop_toBottomOf="@id/massage"
+        app:showActionHint="@string/add_contact_mail"
+        app:showActionHintColor="@color/dialer_main_tab_layout_item_normal"
+        app:showActionHintSize="@dimen/show_contact_info_action_hint_size"
+        app:showActionLineColor="@color/dialer_main_tab_layout_item_normal"
+        app:showActionText="@string/app_name"
+        app:showActionTextColor="@color/black"
+        app:showActionTextSize="@dimen/show_contact_info_action_text_size"
+        tools:ignore="RtlSymmetry" />
+
+    <com.hhtc.dialer.view.ContactShowInfoActionView
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/show_contact_info_action"
+        android:background="@drawable/dialer_show_contact_info_action_background"
+        android:clickable="true"
+        android:onClick="videoAction"
+        android:focusable="true"
+        android:paddingTop="@dimen/show_contact_info_action_padding_bottom"
+        android:paddingBottom="@dimen/show_contact_info_action_padding_bottom"
+        app:layout_constraintTop_toBottomOf="@id/mail"
+        app:showActionHint="@string/add_contact_video"
+        app:showActionHintColor="@color/dialer_main_tab_layout_item_normal"
+        app:showActionHintSize="@dimen/show_contact_info_action_hint_size"
+        app:showActionLineColor="@color/dialer_main_tab_layout_item_normal"
+        app:showActionText="@string/app_name"
+        app:showActionTextColor="@color/black"
+        app:showActionTextSize="@dimen/show_contact_info_action_text_size"
+        tools:ignore="RtlSymmetry" />
+</android.support.constraint.ConstraintLayout>

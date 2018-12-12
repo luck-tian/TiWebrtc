@@ -107,7 +107,8 @@
                 <data android:scheme="tel" />
             </intent-filter>
         </activity>
-        <activity android:name=".add.ContactAddOrEditActivity"></activity>
+        <activity android:name=".add.ContactAddOrEditActivity" />
+        <activity android:name=".show.ShowContactInfoActivity"></activity>
     </application>
 
 </manifest>

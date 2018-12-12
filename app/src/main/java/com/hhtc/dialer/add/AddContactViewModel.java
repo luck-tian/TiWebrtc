@@ -7,7 +7,7 @@ import android.content.Context;
 import com.hhtc.dialer.data.Injection;
 import com.hhtc.dialer.data.Repository;
 import com.hhtc.dialer.data.bean.DialerContact;
-import com.hhtc.dialer.data.dao.LoadUniqueCallback;
+import com.hhtc.dialer.data.LoadUniqueCallback;
 
 public class AddContactViewModel extends ViewModel {
 

@@ -70,9 +70,18 @@ public class ContactItemDecoration extends RecyclerView.ItemDecoration {
             if (Objects.isNull(currentModel(i))) {
                 continue;
             }
+
+
             //画线规则
             drawLine(canvas, parent, left, right, i);
-            drawTitle(canvas, position, child, params);
+
+            if (position == 0) {
+                drawTitle(canvas, position, child, params);
+            } else if (hasLastModel(position) && !TextUtils.equals(lastModel(position).getClassify(), currentModel(position).getClassify())) {
+                drawTitle(canvas, position, child, params);
+            }
+
+
         }
     }
 

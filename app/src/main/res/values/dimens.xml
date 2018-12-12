@@ -56,4 +56,15 @@
     <dimen name="add_contact_input_text_size">14sp</dimen>
     <dimen name="add_contact_input_margin">16dp</dimen>
     <dimen name="add_contact_input_margin_top">30dp</dimen>
+    <dimen name="dialer_back_action_button_bottom_padding">10dp</dimen>
+    <dimen name="dialer_back_action_button_left_padding">20dp</dimen>
+    <dimen name="show_contact_photo">62dp</dimen>
+    <dimen name="show_contact_photo_margin">80dp</dimen>
+    <dimen name="show_contact_user_name">20sp</dimen>
+    <dimen name="show_contact_share_image_margin_top">20dp</dimen>
+    <dimen name="show_contact_info_action">16dp</dimen>
+    <dimen name="show_contact_info_action_hint_size">12sp</dimen>
+    <dimen name="show_contact_info_action_text_size">14sp</dimen>
+    <dimen name="show_contact_info_action_temp">2dp</dimen>
+    <dimen name="show_contact_info_action_padding_bottom">10dp</dimen>
 </resources>

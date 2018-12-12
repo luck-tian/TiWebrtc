@@ -5,8 +5,6 @@ import android.arch.lifecycle.LiveData;
 import com.hhtc.dialer.data.bean.CollectFavorite;
 import com.hhtc.dialer.data.bean.DialerContact;
 import com.hhtc.dialer.data.bean.RecentCallLog;
-import com.hhtc.dialer.data.dao.LoadLiveCallback;
-import com.hhtc.dialer.data.dao.LoadUniqueCallback;
 import com.hhtc.dialer.main.recent.RecentModel;
 import com.hhtc.dialer.thread.TelephoneThreadDispatcher;
 
@@ -66,19 +64,6 @@ public class Repository {
             if (callback != null) {
                 LiveData<List<DialerContact>> dialerContactLiveData = database.getDialerContactDao().loadContactLiveAll();
                 callback.onLiveData(dialerContactLiveData);
-            }
-        }, TelephoneThreadDispatcher.DispatcherType.WORK);
-
-    }
-
-
-    public void getContactById(long id, final LoadUniqueCallback<DialerContact> callback) {
-        TelephoneThreadDispatcher.getInstance().execute(() -> {
-            DialerContact contact = database.getDialerContactDao().loadContactById(id);
-            if (Objects.isNull(contact)) {
-                callback.onDataNotAvailable();
-            } else {
-                callback.onTasksLoaded(contact);
             }
         }, TelephoneThreadDispatcher.DispatcherType.WORK);
 
@@ -154,5 +139,12 @@ public class Repository {
     public void deleteRecent(RecentCallLog callLog) {
         TelephoneThreadDispatcher.getInstance().execute(() -> database.getRecentCallLogDao().deleteRecent(callLog), TelephoneThreadDispatcher.DispatcherType.WORK);
 
+    }
+
+    public void loadContactLiveById(long contactId, LoadLiveCallback<DialerContact> callback) {
+        TelephoneThreadDispatcher.getInstance().execute(() -> {
+            LiveData<DialerContact> dialerContactLiveData = database.getDialerContactDao().loadContactById(contactId);
+            callback.onLiveData(dialerContactLiveData);
+        }, TelephoneThreadDispatcher.DispatcherType.WORK);
     }
 }
