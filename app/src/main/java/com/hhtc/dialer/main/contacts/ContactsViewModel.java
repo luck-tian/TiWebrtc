@@ -72,6 +72,7 @@ public class ContactsViewModel extends ViewModel {
 
     private void sortData(List<ContactModel> modles) {
 
+        //第一轮排序
         Collections.sort(modles, (first, second) -> {
             if (!TextUtils.equals(first.getClassify(), second.getClassify())) {
                 return first.getClassify().compareTo(second.getClassify());
@@ -79,7 +80,22 @@ public class ContactsViewModel extends ViewModel {
                 return first.getDialerContact().getName().compareTo(second.getDialerContact().getName());
             }
         });
-        LogUtil.d(TAG, "sortData: modles:" + modles.size() + "--" + modles.toString());
+
+        //第二轮排序 # 和非 # 排序
+        Collections.sort(modles, (first, second) -> {
+            if (TextUtils.equals(first.getClassify(), second.getClassify()) && TextUtils.equals(first.getClassify(), "#")) {
+                return first.getDialerContact().getName().compareTo(second.getDialerContact().getName());
+            } else if (!TextUtils.equals(first.getClassify(), second.getClassify()) &&
+                    TextUtils.equals(first.getClassify(), "#")) {
+                return 1;
+            } else if (!TextUtils.equals(first.getClassify(), second.getClassify()) &&
+                    TextUtils.equals(second.getClassify(), "#")) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
         contacts.postValue(modles);
     }
 

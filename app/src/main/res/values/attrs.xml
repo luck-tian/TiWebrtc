@@ -23,6 +23,9 @@
         <attr name="showInfoText" format="string" />
         <attr name="showInfoTextSize" format="dimension" />
         <attr name="showInfoIconSize" format="dimension" />
+
+        <attr name="showInfoSelectSrc" format="color|reference" />
+        <attr name="showInfoNormalSrc" format="color|reference" />
     </declare-styleable>
 
     <declare-styleable name="ContactShowInfoActionView">

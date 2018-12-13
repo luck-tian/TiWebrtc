@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dialer_collect_item_height"
     android:background="@drawable/dialer_favorite_item_ripple">
@@ -52,10 +53,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dialer_main_favorite_name_margin"
+        android:paddingEnd="@dimen/dialer_main_favorite_name_padding_end"
         android:textColor="@color/white"
         android:textSize="@dimen/dialer_main_favorite_name_text_size"
         android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintRight_toLeftOf="@id/line"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="RtlSymmetry" />
 
 </android.support.constraint.ConstraintLayout>

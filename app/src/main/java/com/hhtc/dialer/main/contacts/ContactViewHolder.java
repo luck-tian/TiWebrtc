@@ -1,5 +1,6 @@
 package com.hhtc.dialer.main.contacts;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,13 +10,14 @@ import android.widget.Toast;
 
 import com.hhtc.dialer.R;
 import com.hhtc.dialer.data.bean.RecentCallLog;
+import com.hhtc.dialer.utils.intentUnits;
 
 public class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private TextView contact_name;
     private ImageView contact_type;
 
-    private ContactModel contactModle;
+    private ContactModel contactModel;
 
     public ContactViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -24,10 +26,10 @@ public class ContactViewHolder extends RecyclerView.ViewHolder implements View.O
         itemView.setOnClickListener(this);
     }
 
-    public void bindData(ContactModel contactModle) {
-        this.contactModle = contactModle;
-        contact_name.setText(contactModle.getDialerContact().getName());
-        if (contactModle.getDialerContact().getType() == RecentCallLog.BLOCK_CHAIN) {
+    public void bindData(ContactModel contactModel) {
+        this.contactModel = contactModel;
+        contact_name.setText(contactModel.getDialerContact().getName());
+        if (contactModel.getDialerContact().getType() == RecentCallLog.BLOCK_CHAIN) {
             contact_type.setVisibility(View.VISIBLE);
         } else {
             contact_type.setVisibility(View.GONE);
@@ -36,6 +38,6 @@ public class ContactViewHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(contact_name.getContext(), contactModle.getDialerContact().getName(), Toast.LENGTH_SHORT).show();
+        intentUnits.startShowContact((Activity) contact_name.getContext(), contactModel.getDialerContact().getId());
     }
 }

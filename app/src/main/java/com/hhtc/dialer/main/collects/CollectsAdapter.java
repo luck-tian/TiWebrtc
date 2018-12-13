@@ -69,11 +69,12 @@ public class CollectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
     public void setModels(List<CollectFavorite> models) {
-        if (Objects.isNull(models)) {
+        this.models.clear();
+        if (Objects.isNull(models) || models.isEmpty()) {
             type = EMPTY_TYPE;
+            this.models.add(null);
         } else {
             type = NORMAL_TYPE;
-            this.models.remove(0);
             this.models.addAll(models);
         }
         notifyDataSetChanged();
@@ -85,7 +86,7 @@ public class CollectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public void bindRecycler(RecyclerView collect_view) {
-        collect_view.addItemDecoration(new FavoriteItemDecoration(2,2,true));
+        collect_view.addItemDecoration(new FavoriteItemDecoration(2, 2, true));
         collect_view.setAdapter(this);
     }
 

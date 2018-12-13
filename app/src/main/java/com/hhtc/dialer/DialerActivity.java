@@ -1,7 +1,6 @@
 package com.hhtc.dialer;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -20,8 +19,7 @@ import com.hhtc.dialer.main.collects.CollectsFragment;
 import com.hhtc.dialer.main.contacts.ContactsFragment;
 import com.hhtc.dialer.main.recent.RecentFragment;
 import com.hhtc.dialer.permission.PermissionsUtil;
-import com.hhtc.dialer.show.ShowContactInfoActivity;
-import com.hhtc.dialer.utils.IntentUitls;
+import com.hhtc.dialer.utils.intentUnits;
 import com.hhtc.dialer.view.TableViewPager;
 
 import java.util.ArrayList;
@@ -92,8 +90,6 @@ public class DialerActivity extends AppCompatActivity {
         });
         add_contacts.setOnClickListener(this::addContact);
 
-        Intent intent = new Intent(this,ShowContactInfoActivity.class);
-        startActivity(intent);
     }
 
 
@@ -123,7 +119,7 @@ public class DialerActivity extends AppCompatActivity {
     }
 
     private void addContact(View view) {
-        IntentUitls.startAddContact(DialerActivity.this);
+        intentUnits.startAddContact(DialerActivity.this);
     }
 
 }

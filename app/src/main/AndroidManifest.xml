@@ -79,6 +79,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="false"
@@ -107,8 +108,15 @@
                 <data android:scheme="tel" />
             </intent-filter>
         </activity>
-        <activity android:name=".add.ContactAddOrEditActivity" />
-        <activity android:name=".show.ShowContactInfoActivity"></activity>
+        <activity
+            android:name=".add.ContactAddOrEditActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".show.ShowContactInfoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

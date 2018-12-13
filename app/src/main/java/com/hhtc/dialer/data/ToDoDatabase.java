@@ -16,10 +16,13 @@
 
 package com.hhtc.dialer.data;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.hhtc.dialer.data.bean.CollectFavorite;
 import com.hhtc.dialer.data.bean.DialerContact;
@@ -29,7 +32,7 @@ import com.hhtc.dialer.data.dao.DialerContactDao;
 import com.hhtc.dialer.data.dao.RecentCallLogDao;
 
 
-@Database(entities = {CollectFavorite.class, DialerContact.class, RecentCallLog.class}, version = 1)
+@Database(entities = {CollectFavorite.class, DialerContact.class, RecentCallLog.class}, version = 2)
 public abstract class ToDoDatabase extends RoomDatabase {
 
     private static ToDoDatabase INSTANCE;
@@ -47,11 +50,18 @@ public abstract class ToDoDatabase extends RoomDatabase {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                         ToDoDatabase.class, "Dialer.db")
-                        .addMigrations()
+                        .addMigrations(migration1_2)
                         .build();
             }
             return INSTANCE;
         }
     }
+
+    private static Migration migration1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE dialer_contact ADD COLUMN contact_favorite INTEGER NOT NULL DEFAULT 0");
+        }
+    };
 
 }

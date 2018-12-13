@@ -59,7 +59,10 @@ public class DialerContact {
     @ColumnInfo(name = "contact_type")
     private int mType;
 
-    public DialerContact(){
+    @ColumnInfo(name = "contact_favorite")
+    private boolean favorite;
+
+    public DialerContact() {
 
     }
 
@@ -70,6 +73,7 @@ public class DialerContact {
                          String email,
                          String video,
                          String photo,
+                         boolean favorite,
                          int type) {
         this.mName = name;
         this.mTel = tel;
@@ -78,6 +82,7 @@ public class DialerContact {
         this.mPhoto = photo;
         this.mVideo = video;
         this.mType = type;
+        this.favorite = favorite;
     }
 
 
@@ -143,6 +148,14 @@ public class DialerContact {
 
     public void setType(int mType) {
         this.mType = mType;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     @Override

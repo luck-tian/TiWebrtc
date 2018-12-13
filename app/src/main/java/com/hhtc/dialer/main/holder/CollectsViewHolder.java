@@ -1,5 +1,6 @@
 package com.hhtc.dialer.main.holder;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.hhtc.dialer.R;
 import com.hhtc.dialer.data.bean.CollectFavorite;
+import com.hhtc.dialer.utils.intentUnits;
 
 public class CollectsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
@@ -26,7 +28,7 @@ public class CollectsViewHolder extends RecyclerView.ViewHolder implements View.
         speed = itemView.findViewById(R.id.speed);
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
-        speed.setOnClickListener(speedAction);
+        speed.setOnClickListener(this::speedAction);
     }
 
     public void bindData(CollectFavorite collectFavorite) {
@@ -35,12 +37,9 @@ public class CollectsViewHolder extends RecyclerView.ViewHolder implements View.
         firstChar.setText(String.valueOf(collectFavorite.getName().charAt(0)));
     }
 
-    private View.OnClickListener speedAction = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
+    private void speedAction(View view) {
+        intentUnits.startShowContact((Activity) view.getContext(), collectFavorite.getId());
+    }
 
     @Override
     public void onClick(View v) {

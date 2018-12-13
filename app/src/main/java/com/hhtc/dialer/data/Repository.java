@@ -29,14 +29,10 @@ public class Repository {
     }
 
 
-    public void getAllFavorite(final LoadDataCallback<CollectFavorite> callback) {
+    public void loadFavoriteAll(final LoadListLiveCallback<CollectFavorite> callback) {
         TelephoneThreadDispatcher.getInstance().execute(() -> {
-            List<CollectFavorite> allFavorite = database.getCollectFavoriteDao().getAllFavorite();
-            if (allFavorite.isEmpty()) {
-                callback.onDataNotAvailable();
-            } else {
-                callback.onTasksLoaded(allFavorite);
-            }
+            LiveData<List<CollectFavorite>> listLiveData = database.getCollectFavoriteDao().loadFavoriteAll();
+            callback.onLiveData(listLiveData);
         }, TelephoneThreadDispatcher.DispatcherType.WORK);
     }
 
@@ -86,9 +82,33 @@ public class Repository {
                 database.getDialerContactDao().insertContact(contact);
             }
 
+            CollectFavorite favorite = loadFavoriteById(contact.getId());
+
+            if (Objects.isNull(favorite) && contact.isFavorite()) {
+                favorite = new CollectFavorite();
+                favorite.setId(contact.getId());
+                favorite.setName(contact.getName());
+                favorite.setTel(contact.getTel());
+                favorite.setVideo(contact.getVideo());
+                favorite.setType(contact.getType());
+                database.getCollectFavoriteDao().insertFavorite(favorite);
+            } else if (!Objects.isNull(favorite) && !contact.isFavorite()) {
+                database.getCollectFavoriteDao().deleteFavorite(favorite);
+            }else if(!Objects.isNull(favorite) && contact.isFavorite()){
+                favorite.setId(contact.getId());
+                favorite.setName(contact.getName());
+                favorite.setTel(contact.getTel());
+                favorite.setVideo(contact.getVideo());
+                favorite.setType(contact.getType());
+                database.getCollectFavoriteDao().updateFavorite(favorite);
+            }
 
         }, TelephoneThreadDispatcher.DispatcherType.WORK);
 
+    }
+
+    private CollectFavorite loadFavoriteById(long id) {
+        return database.getCollectFavoriteDao().loadFavoriteById(id);
     }
 
 

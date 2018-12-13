@@ -1,5 +1,6 @@
 package com.hhtc.dialer.data.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -20,10 +21,18 @@ public interface CollectFavoriteDao {
      * @return
      */
     @Query("SELECT * FROM collect_favorite")
-    List<CollectFavorite> getAllFavorite();
+    LiveData<List<CollectFavorite>> loadFavoriteAll();
+
+    /**
+     * @param id
+     * @return
+     */
+    @Query("SELECT * FROM collect_favorite WHERE favorite_id=:id")
+    CollectFavorite loadFavoriteById(long id);
 
     /**
      * 插入
+     *
      * @param favorite
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)

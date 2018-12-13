@@ -38,4 +38,10 @@ public class ShowContactInViewModel extends AndroidViewModel {
     public LiveData<DialerContact> getContactLiveData() {
         return contactLiveData;
     }
+
+    public void changeFavorite(DialerContact contact) {
+        if (contact != null) {
+            repository.updateContact(contact);
+        }
+    }
 }

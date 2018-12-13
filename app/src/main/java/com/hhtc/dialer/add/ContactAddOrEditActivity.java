@@ -1,9 +1,11 @@
 package com.hhtc.dialer.add;
 
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -17,7 +19,7 @@ import com.hhtc.dialer.view.AddContactInputView;
 
 import java.util.Objects;
 
-public class ContactAddOrEditActivity extends AppCompatActivity {
+public class ContactAddOrEditActivity extends AppCompatActivity implements Observer<Void> {
 
     public static final String CONTACT_MODEL_ID = "contact_model_id";
 
@@ -55,17 +57,25 @@ public class ContactAddOrEditActivity extends AppCompatActivity {
 
     private void buildUrl() {
         Intent intent = getIntent();
-        int contact = intent.getIntExtra(CONTACT_MODEL_ID, 0);
+        long contact = intent.getLongExtra(CONTACT_MODEL_ID, 0);
         if (contact == 0) {
             dialerContact = new DialerContact();
         } else {
-            mViewModel.getContact().observe(this, this::loadDialerContact);
+            mViewModel.getNotify().observe(this, this);
             mViewModel.loadContact(contact);
         }
     }
 
+    @Override
+    public void onChanged(@Nullable Void aVoid) {
+        mViewModel.getContact().observe(this, this::loadDialerContact);
+    }
+
     private void loadDialerContact(DialerContact contact) {
-        Objects.requireNonNull(name.getEditText()).setText(contact.getName());
+        if (contact != null) {
+            this.dialerContact = contact;
+            Objects.requireNonNull(name.getEditText()).setText(contact.getName());
+        }
     }
 
     private AddContactInputWatcher watcher = new AddContactInputWatcher() {
@@ -73,6 +83,8 @@ public class ContactAddOrEditActivity extends AppCompatActivity {
         public void afterTextChanged(Editable s) {
             if (s.length() > 0) {
                 textChanged(s.toString());
+            } else {
+                textChanged("");
             }
         }
     };
@@ -104,4 +116,6 @@ public class ContactAddOrEditActivity extends AppCompatActivity {
         }
 
     }
+
+
 }
