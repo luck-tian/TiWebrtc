@@ -9,36 +9,28 @@
 
 
     <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:background="@color/red">
+        android:id="@+id/delete_view"
+        android:layout_width="@dimen/contact_item_delete_size"
+        android:layout_height="@dimen/dialer_contact_item_height"
+        android:background="@color/red"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/contact_item_delete_padding">
 
-        <com.hhtc.dialer.view.RemoveContentView
-            android:id="@+id/share_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_gravity="right"
-            android:background="@drawable/dialer_contact_item_background"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="showShare"
-            app:removeIconSize="@dimen/dialer_remove_view_delete_icon_size"
-            app:removeSrc="@drawable/dialer_contact_remove_icon"
-            app:removeText="@string/show_contact_info_share"
-            app:removeTextColor="@color/white"
-            app:removeTextSize="@dimen/dialer_recent_head_text_size" />
+            android:src="@drawable/dialer_contact_remove_icon" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white" />
-
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/item_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/dialer_contact_item_background2">
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
 
         <TextView
             android:id="@+id/contact_name"
@@ -63,4 +55,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
+
+
 </com.hhtc.dialer.view.RemoveView>

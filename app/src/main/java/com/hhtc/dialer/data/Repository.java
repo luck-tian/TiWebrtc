@@ -94,7 +94,7 @@ public class Repository {
                 database.getCollectFavoriteDao().insertFavorite(favorite);
             } else if (!Objects.isNull(favorite) && !contact.isFavorite()) {
                 database.getCollectFavoriteDao().deleteFavorite(favorite);
-            }else if(!Objects.isNull(favorite) && contact.isFavorite()){
+            } else if (!Objects.isNull(favorite) && contact.isFavorite()) {
                 favorite.setId(contact.getId());
                 favorite.setName(contact.getName());
                 favorite.setTel(contact.getTel());
@@ -112,8 +112,19 @@ public class Repository {
     }
 
 
+    /**
+     * 删除联系人
+     *
+     * @param contact
+     */
     public void deleteContact(DialerContact contact) {
-        TelephoneThreadDispatcher.getInstance().execute(() -> database.getDialerContactDao().deleteContact(contact), TelephoneThreadDispatcher.DispatcherType.WORK);
+        TelephoneThreadDispatcher.getInstance().execute(() -> {
+            database.getDialerContactDao().deleteContact(contact);
+            CollectFavorite favorite = loadFavoriteById(contact.getId());
+            if (!Objects.isNull(favorite)) {
+                deleteFavorite(favorite);
+            }
+        }, TelephoneThreadDispatcher.DispatcherType.WORK);
 
     }
 

@@ -98,6 +98,7 @@ public class DialerActivity extends AppCompatActivity {
         pagers.add(CollectsFragment.newInstance());
         pagers.add(RecentFragment.newInstance());
         pagers.add(ContactsFragment.newInstance());
+        content_pager.setPagerSelectMove(pagers.get((pagers.size()-1)));
         return pagers;
     }
 

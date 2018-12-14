@@ -11,6 +11,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.hhtc.dialer.R;
 
 public class RemoveView extends ViewGroup {
 
+    private static final String TAG = "RemoveView";
     protected static final int STATE_CLOSE = 0;
     protected static final int STATE_CLOSING = 1;
     protected static final int STATE_OPEN = 2;
@@ -167,13 +169,6 @@ public class RemoveView extends ViewGroup {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        if(getChildCount()==0){
-            mMainView = getChildAt(0);
-        }
-        for (int i = 1; i < (getChildCount() - 1); i++) {
-
-        }
         // get views
         if (getChildCount() >= 2) {
             mSecondaryView = getChildAt(0);
@@ -187,7 +182,7 @@ public class RemoveView extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         mAborted = false;
-
+//        Log.d(TAG, "onLayout: left:" + l + " top:" + t + " right:" + r + " bottom:" + b);
         for (int index = 0; index < getChildCount(); index++) {
             final View child = getChildAt(index);
 
@@ -344,10 +339,10 @@ public class RemoveView extends ViewGroup {
 
         // adjust desired width
         if (widthMode == MeasureSpec.EXACTLY) {
-            desiredWidth = measuredWidth;
+            desiredWidth = Math.max(measuredWidth,desiredWidth);
         } else {
             if (params.width == LayoutParams.MATCH_PARENT) {
-                desiredWidth = measuredWidth;
+                desiredWidth = Math.max(measuredWidth,desiredWidth);
             }
 
             if (widthMode == MeasureSpec.AT_MOST) {
@@ -357,7 +352,7 @@ public class RemoveView extends ViewGroup {
 
         // adjust desired height
         if (heightMode == MeasureSpec.EXACTLY) {
-            desiredHeight = measuredHeight;
+            desiredHeight = Math.max(measuredHeight,desiredHeight);
         } else {
             if (params.height == LayoutParams.MATCH_PARENT) {
                 desiredHeight = measuredHeight;
@@ -368,6 +363,7 @@ public class RemoveView extends ViewGroup {
             }
         }
 
+        Log.d(TAG, "onMeasure: desiredWidth " + desiredWidth + " desiredHeight " + desiredHeight);
         setMeasuredDimension(desiredWidth, desiredHeight);
     }
 
@@ -963,6 +959,10 @@ public class RemoveView extends ViewGroup {
             default:
                 return "undefined";
         }
+    }
+
+    public void setSwipeListener(SwipeListener mSwipeListener) {
+        this.mSwipeListener = mSwipeListener;
     }
 
     private int pxToDp(int px) {

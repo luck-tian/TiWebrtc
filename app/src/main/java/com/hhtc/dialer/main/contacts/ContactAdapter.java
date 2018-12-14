@@ -14,9 +14,13 @@ import com.hhtc.dialer.R;
 import com.hhtc.dialer.adapter.ContactItemDecoration;
 import com.hhtc.dialer.main.holder.EmptyHolder;
 import com.hhtc.dialer.view.DialerContactBarView;
+import com.hhtc.dialer.view.RemoveView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements DialerContactBarView.IndexPressedListener {
@@ -39,6 +43,12 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private TextView tipsView;
 
     private ActionFloatingButton floatingButton;
+
+    private Map<Integer, RemoveView> mapLayouts = Collections.synchronizedMap(new HashMap<Integer, RemoveView>());
+
+    private RecyclerView recyclerView;
+
+    private ContactModel delete;
 
     public ContactAdapter(Context context, ActionFloatingButton floatingButton) {
         this.context = context;
@@ -64,7 +74,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holder = new EmptyHolder(inflater.inflate(R.layout.contact_data_empty_layout, viewGroup, false));
                 break;
             case NORMAL_TYPE:
-                holder = new ContactViewHolder(inflater.inflate(R.layout.contact_item_layout, viewGroup, false));
+                holder = new ContactViewHolder(inflater.inflate(R.layout.contact_item_layout, viewGroup, false), mapLayouts, this::accept);
                 break;
             default:
                 throw new RuntimeException("contact adapter view type unaware!!");
@@ -81,14 +91,20 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     public void setModels(List<ContactModel> models) {
-        if (Objects.isNull(models)||models.isEmpty()) {
+        this.models.clear();
+        if (Objects.isNull(models) || models.isEmpty()) {
             type = EMPTY_TYPE;
+            this.models.add(null);
         } else {
             type = NORMAL_TYPE;
-            this.models.clear();
             this.models.addAll(models);
         }
         notifyDataSetChanged();
+    }
+
+
+    private void accept(ContactModel model) {
+        this.delete = model;
     }
 
     @Override
@@ -97,6 +113,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public void bindRecycler(RecyclerView recyclerView, LinearLayoutManager linearLayoutManager, DialerContactBarView contact_bar_view, TextView index_bar_tips) {
+        this.recyclerView = recyclerView;
         this.linearLayoutManager = linearLayoutManager;
         recyclerView.setLayoutManager(linearLayoutManager);
         contactItemDecoration = new ContactItemDecoration(recyclerView.getContext(), models);
@@ -141,4 +158,11 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
+    public void itemSwipeClose() {
+        for (RemoveView vi : mapLayouts.values()) {
+            if (Objects.nonNull(vi)) {
+                vi.close(true);
+            }
+        }
+    }
 }

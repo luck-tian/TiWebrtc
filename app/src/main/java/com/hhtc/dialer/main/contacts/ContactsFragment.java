@@ -71,6 +71,11 @@ public class ContactsFragment extends DialerFragment implements ActionFloatingBu
     }
 
     @Override
+    public void onPagerSelectMove() {
+        adapter.itemSwipeClose();
+    }
+
+    @Override
     public void show() {
         mSharedViewModel.setAction(true);
     }
