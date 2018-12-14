@@ -68,4 +68,5 @@
     <dimen name="show_contact_info_action_temp">2dp</dimen>
     <dimen name="show_contact_info_action_padding_bottom">10dp</dimen>
     <dimen name="dialer_main_favorite_name_padding_end">45dp</dimen>
+    <dimen name="dialer_remove_view_delete_icon_size">20dp</dimen>
 </resources>

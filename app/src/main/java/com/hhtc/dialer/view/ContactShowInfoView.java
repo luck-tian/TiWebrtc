@@ -46,6 +46,7 @@ public class ContactShowInfoView extends LinearLayout {
         int defaultSrc = typedArray.getResourceId(R.styleable.ContactShowInfoView_showInfoSrc, 0);
         normalSrc = typedArray.getResourceId(R.styleable.ContactShowInfoView_showInfoNormalSrc, 0);
         selectSrc = typedArray.getResourceId(R.styleable.ContactShowInfoView_showInfoSelectSrc, 0);
+        int color = typedArray.getColor(R.styleable.ContactShowInfoView_showInfoTextColor, Color.BLACK);
         float showInfoIconSize = typedArray.getDimension(R.styleable.ContactShowInfoView_showInfoIconSize, 0);
         float showInfoTextSize = typedArray.getDimension(R.styleable.ContactShowInfoView_showInfoTextSize, 0);
         typedArray.recycle();
@@ -58,6 +59,7 @@ public class ContactShowInfoView extends LinearLayout {
 
         TextView tips = new TextView(getContext());
         tips.setText(showInfoText);
+        tips.setTextColor(color);
         tips.setTextSize(TypedValue.COMPLEX_UNIT_PX, showInfoTextSize);
         addView(tips, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
     }

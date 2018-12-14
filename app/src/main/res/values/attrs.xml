@@ -21,6 +21,7 @@
     <declare-styleable name="ContactShowInfoView">
         <attr name="showInfoSrc" format="color|reference" />
         <attr name="showInfoText" format="string" />
+        <attr name="showInfoTextColor" format="color" />
         <attr name="showInfoTextSize" format="dimension" />
         <attr name="showInfoIconSize" format="dimension" />
 
@@ -36,5 +37,33 @@
         <attr name="showActionTextColor" format="color" />
         <attr name="showActionTextSize" format="dimension" />
         <attr name="showActionLineColor" format="color" />
+    </declare-styleable>
+
+
+    <declare-styleable name="RemoveContentView">
+        <attr name="removeSrc" format="color|reference" />
+        <attr name="removeText" format="string" />
+        <attr name="removeTextColor" format="color" />
+        <attr name="removeTextSize" format="dimension" />
+        <attr name="removeIconSize" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="RemoveView">
+        <attr name="dragEdge">
+            <flag name="left" value="1" />
+            <flag name="right" value="2" />
+            <flag name="top" value="3" />
+            <flag name="bottom" value="4" />
+        </attr>
+
+        <attr name="mode">
+            <enum name="normal" value="0"/>
+            <enum name="same_level" value="1"/>
+        </attr>
+
+        <attr name="flingVelocity" format="integer" />
+        
+        <attr name="minDistRequestDisallowParent" format="dimension"/>
     </declare-styleable>
 </resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hhtc.dialer.view.RemoveView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@color/dialer_main_tab_layout_item_normal">
+
+    <com.hhtc.dialer.view.RemoveContentView
+        android:id="@+id/share_image"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:background="@drawable/dialer_contact_item_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="showShare"
+        app:removeIconSize="@dimen/dialer_main_title_image_button_width"
+        app:removeSrc="@drawable/dialer_contact_remove_icon"
+        app:removeText="@string/show_contact_info_share"
+        app:removeTextColor="@color/white"
+        app:removeTextSize="@dimen/dialer_recent_head_text_size" />
+
+</com.hhtc.dialer.view.RemoveView>
