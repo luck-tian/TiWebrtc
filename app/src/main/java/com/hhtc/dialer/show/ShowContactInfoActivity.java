@@ -2,6 +2,7 @@ package com.hhtc.dialer.show;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -93,7 +94,12 @@ public class ShowContactInfoActivity extends AppCompatActivity implements Observ
     }
 
     public void showShare(View view) {
-
+        if (Objects.nonNull(contact) && Objects.nonNull(contact.getName())) {
+            Intent textIntent = new Intent(Intent.ACTION_SEND);
+            textIntent.setType("text/plain");
+            textIntent.putExtra(Intent.EXTRA_TEXT, contact.getName() + " : " + contact.getTel());
+            startActivity(Intent.createChooser(textIntent, "pundxi share"));
+        }
     }
 
     public void showFavorite(View view) {
