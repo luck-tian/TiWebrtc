@@ -1,5 +1,6 @@
 package com.hhtc.dialer.main.contacts;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hhtc.dialer.R;
+import com.hhtc.dialer.data.bean.DialerContact;
 import com.hhtc.dialer.main.DialerFragment;
 import com.hhtc.dialer.main.FloatingViewModel;
 import com.hhtc.dialer.view.DialerContactBarView;
@@ -61,10 +63,15 @@ public class ContactsFragment extends DialerFragment implements ActionFloatingBu
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this, new ContactFactory(this)).get(ContactsViewModel.class);
         mSharedViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(FloatingViewModel.class);
-        mViewModel.getContacts().observe(this, this::onChangedData);
+        mViewModel.getNotify().observe(this, this::onChanged);
+        mViewModel.getModels().observe(this, this::onChangedData);
         mViewModel.loadContact();
     }
 
+
+    private void onChanged(Void aVoid) {
+        mViewModel.getContacts().observe(this, dialerContacts -> mViewModel.changedData(dialerContacts));
+    }
 
     private void onChangedData(List<ContactModel> dialerContacts) {
         adapter.setModels(dialerContacts);
@@ -84,4 +91,6 @@ public class ContactsFragment extends DialerFragment implements ActionFloatingBu
     public void hind() {
         mSharedViewModel.setAction(false);
     }
+
+
 }

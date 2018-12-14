@@ -65,6 +65,16 @@ public class Repository {
 
     }
 
+    public void loadContactAll(final LoadDataCallback<DialerContact> callback) {
+        TelephoneThreadDispatcher.getInstance().execute(() -> {
+            if (callback != null) {
+                List<DialerContact> dialerContacts = database.getDialerContactDao().loadContactAll();
+                callback.onTasksLoaded(dialerContacts);
+            }
+        }, TelephoneThreadDispatcher.DispatcherType.WORK);
+
+    }
+
 
     public void insertContact(DialerContact contact) {
         TelephoneThreadDispatcher.getInstance().execute(() -> database.getDialerContactDao().insertContact(contact), TelephoneThreadDispatcher.DispatcherType.WORK);

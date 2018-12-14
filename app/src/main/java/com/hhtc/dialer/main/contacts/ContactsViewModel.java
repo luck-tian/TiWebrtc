@@ -8,9 +8,12 @@ import android.text.TextUtils;
 
 import com.github.promeg.pinyinhelper.Pinyin;
 import com.hhtc.dialer.data.Injection;
+import com.hhtc.dialer.data.LoadDataCallback;
+import com.hhtc.dialer.data.LoadLiveCallback;
 import com.hhtc.dialer.data.Repository;
 import com.hhtc.dialer.data.bean.DialerContact;
 import com.hhtc.dialer.main.DialerFragment;
+import com.hhtc.dialer.thread.TelephoneThreadDispatcher;
 import com.hhtc.dialer.utils.LogUtil;
 
 import java.util.ArrayList;
@@ -23,30 +26,35 @@ public class ContactsViewModel extends ViewModel {
 
     private static final String TAG = "ContactsViewModel";
 
-    private MutableLiveData<List<ContactModel>> contacts = new MutableLiveData<>();
-
-
     private Repository repository;
 
-    private DialerFragment fragment;
+    private MutableLiveData<Void> notify = new MutableLiveData<>();
+
+    private LiveData<List<DialerContact>> contacts;
+
+    private MutableLiveData<List<ContactModel>> models = new MutableLiveData<>();
 
     public ContactsViewModel(DialerFragment fragment) {
-        this.fragment = fragment;
         repository = Injection.provideTasksRepository(Objects.requireNonNull(fragment.getContext()).getApplicationContext());
     }
 
 
     public void loadContact() {
-        repository.loadContactLiveAll(this::liveData);
+        repository.loadContactLiveAll(this::onLiveData);
+    }
+
+    public void onLiveData(LiveData<List<DialerContact>> data) {
+        this.contacts = data;
+        notify.postValue(null);
     }
 
 
-    private void liveData(LiveData<List<DialerContact>> data) {
-        data.observe(fragment, this::changedData);
+    public void changedData(List<DialerContact> dialerContacts) {
+        TelephoneThreadDispatcher.getInstance().execute(() -> postModel(dialerContacts),TelephoneThreadDispatcher.DispatcherType.WORK);
+
     }
 
-
-    private void changedData(List<DialerContact> dialerContacts) {
+    private void postModel(List<DialerContact> dialerContacts) {
         LogUtil.d(TAG, "changedData: dialerContacts:" + dialerContacts.size() + "--" + dialerContacts.toString());
         List<ContactModel> modles = new ArrayList<>(dialerContacts.size());
         for (int i = 0; i < dialerContacts.size(); i++) {
@@ -70,7 +78,7 @@ public class ContactsViewModel extends ViewModel {
     }
 
 
-    private void sortData(List<ContactModel> modles) {
+    public void sortData(List<ContactModel> modles) {
 
         //第一轮排序
         Collections.sort(modles, (first, second) -> {
@@ -96,16 +104,19 @@ public class ContactsViewModel extends ViewModel {
             }
         });
 
-        contacts.postValue(modles);
+        this.models.postValue(modles);
     }
 
-    public MutableLiveData<List<ContactModel>> getContacts() {
+
+    public MutableLiveData<Void> getNotify() {
+        return notify;
+    }
+
+    public LiveData<List<DialerContact>> getContacts() {
         return contacts;
     }
 
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-        fragment = null;
+    public MutableLiveData<List<ContactModel>> getModels() {
+        return models;
     }
 }

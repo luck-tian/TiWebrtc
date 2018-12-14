@@ -25,6 +25,15 @@ public interface DialerContactDao {
     @Query("SELECT * FROM dialer_contact")
     LiveData<List<DialerContact>> loadContactLiveAll();
 
+
+    /**
+     * 查询所有
+     *
+     * @return
+     */
+    @Query("SELECT * FROM dialer_contact")
+    List<DialerContact> loadContactAll();
+
     /**
      * 根据id🍵
      *
