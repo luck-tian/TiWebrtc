@@ -4,8 +4,12 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Objects;
 
 @Entity(tableName = "recent_call_log")
@@ -18,12 +22,23 @@ public class RecentCallLog {
     @Ignore//未接
     public static final int MISSED_TYPE = 3;
 
+    @IntDef({INCOMING_TYPE, OUTGOING_TYPE, MISSED_TYPE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface CallType {
+    }
 
-    //传统
+    @Ignore//传统
     public static final int TRADITIONAL = 4;
-    //Block chain
+    @Ignore//Block chain
     public static final int BLOCK_CHAIN = 5;
 
+    public static final String TEL_TYPE = "tel";
+    public static final String VIDEO_TYPE = "video";
+
+    @StringDef({TEL_TYPE, VIDEO_TYPE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface TelOrVideo {
+    }
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "recent_id")
@@ -44,6 +59,7 @@ public class RecentCallLog {
     /**
      * 是电话还是视频
      */
+    @TelOrVideo
     @ColumnInfo(name = "recent_telOrVideo")
     private String mTelOrVideo;
 
@@ -62,8 +78,12 @@ public class RecentCallLog {
     /**
      * 通话时间 接电话 未接电话 拨打电话 3中类型
      */
+    @CallType
     @ColumnInfo(name = "recent_type")
     private int mCallType;
+
+    @ColumnInfo(name = "recent_tradition")
+    private boolean mTradition;
 
     public RecentCallLog() {
 
@@ -141,6 +161,14 @@ public class RecentCallLog {
         this.mCallType = mCallType;
     }
 
+    public boolean isTradition() {
+        return mTradition;
+    }
+
+    public void setTradition(boolean mTradition) {
+        this.mTradition = mTradition;
+    }
+
     @Override
     public boolean equals(@Nullable Object o) {
         if (this == o) return true;
@@ -154,6 +182,6 @@ public class RecentCallLog {
 
     @Override
     public String toString() {
-        return "{ name:" + mName + " tel:" + mTel + " call type:" + mCallType + " database id:" + mId + " }";
+        return "{ name:" + mName + " tel:" + mTel + " call type:" + mCallType + " data:" + mCallTime + " database id:" + mId + " }";
     }
 }

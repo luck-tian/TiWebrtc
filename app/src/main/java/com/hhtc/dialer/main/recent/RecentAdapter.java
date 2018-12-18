@@ -1,6 +1,7 @@
 package com.hhtc.dialer.main.recent;
 
 import android.content.Context;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,8 @@ import com.hhtc.dialer.data.bean.RecentCallLog;
 import com.hhtc.dialer.main.holder.CollectsViewHolder;
 import com.hhtc.dialer.main.holder.EmptyHolder;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +32,11 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public static final int NORMAL_DATA = 4;
 
     private int type = LOADING_TYPE;
+
+    @IntDef({HEAD_DATA,NORMAL_DATA})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface HeadOrNormal {
+    }
 
     private Context context;
 
@@ -85,13 +93,14 @@ public class RecentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-    public void setModels(List<RecentModel> models) {
-        if (Objects.isNull(models)) {
+    public void setModels(List<RecentModel> model) {
+        models.clear();
+        if (Objects.isNull(model)) {
             type = EMPTY_TYPE;
+            models.add(null);
         } else {
             type = NORMAL_TYPE;
-            this.models.remove(0);
-            this.models.addAll(models);
+            this.models.addAll(model);
         }
         notifyDataSetChanged();
     }

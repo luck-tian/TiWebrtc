@@ -47,7 +47,6 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         this.recentModel = recentModel;
         call_name.setText(recentModel.getCallLog().getName());
         tel_number.setText(recentModel.getCallLog().getTel());
-        call_duration.setText("09:09");
 
         //设置通话类型图标
         switch (recentModel.getCallLog().getCallType()) {
@@ -76,13 +75,13 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
             call_name.setText(recentModel.getCallLog().getTel());
             tel_number.setText(R.string.dialer_recent_item_call_not_save);
         } else {
-            call_name.setText(recentModel.getCallLog().getTel());
+            call_name.setText(recentModel.getCallLog().getName());
             tel_number.setText(recentModel.getCallLog().getTel());
         }
 
         call_duration.setText(TimeUtils.millis2String(recentModel.getCallLog().getCallTime(),new SimpleDateFormat("mm:ss")));
 
-        if (recentModel.getCallLog().getCallType() == RecentCallLog.TRADITIONAL) {
+        if (recentModel.getCallLog().isTradition()) {
             photo.setImageResource(R.drawable.telephone_call_head_portrait_traditional_test);
         } else {
             photo.setImageResource(R.drawable.telephone_call_head_portrait_node_test);

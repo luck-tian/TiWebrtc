@@ -4,10 +4,14 @@ import com.hhtc.dialer.data.bean.RecentCallLog;
 
 public class RecentModel {
 
+    /**
+     * title 显示时间
+     */
     private String time;
 
     private RecentCallLog callLog;
 
+    @RecentAdapter.HeadOrNormal
     private int type;
 
     public int getType() {

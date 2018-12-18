@@ -1,7 +1,10 @@
 package com.hhtc.dialer;
 
+import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -11,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.hhtc.dialer.animation.DialerActionButtonAnimation;
+import com.hhtc.dialer.data.tradition.TraditionSynchronise;
 import com.hhtc.dialer.main.DialerFragment;
 import com.hhtc.dialer.main.DialerTabPagerAdapter;
 import com.hhtc.dialer.main.FloatingViewModel;
@@ -57,15 +61,19 @@ public class DialerActivity extends AppCompatActivity {
         page_navigation = findViewById(R.id.page_navigation);
         content_pager = findViewById(R.id.content_pager);
         action_button = findViewById(R.id.action_button);
-        String[] deniedContactsPermissions =
-                PermissionsUtil.getPermissionsCurrentlyDenied(
-                        this, PermissionsUtil.allContactsGroupPermissionsUsedInDialer);
-        if (deniedContactsPermissions.length > 0) {
-            ActivityCompat.requestPermissions(this, PermissionsUtil.allPhoneGroupPermissionsUsedInDialer.toArray(new String[PermissionsUtil.allPhoneGroupPermissionsUsedInDialer.size()]),
-                    REQUEST_READ_CONTACTS);
-        }
+        ActivityCompat.requestPermissions(this, PermissionsUtil.allPhoneGroupPermissionsUsedInDialer.toArray(new String[PermissionsUtil.allPhoneGroupPermissionsUsedInDialer.size()]),
+                REQUEST_READ_CONTACTS);
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //开始同步电话数据
+        if (ActivityCompat.checkSelfPermission(DialerActivity.this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
+            TraditionSynchronise.getInstance().startSynchronization(getApplicationContext());
+        }
+    }
 
     private void setData() {
         adapter = new DialerTabPagerAdapter(getSupportFragmentManager(), createPager());
@@ -98,7 +106,7 @@ public class DialerActivity extends AppCompatActivity {
         pagers.add(CollectsFragment.newInstance());
         pagers.add(RecentFragment.newInstance());
         pagers.add(ContactsFragment.newInstance());
-        content_pager.setPagerSelectMove(pagers.get((pagers.size()-1)));
+        content_pager.setPagerSelectMove(pagers.get((pagers.size() - 1)));
         return pagers;
     }
 

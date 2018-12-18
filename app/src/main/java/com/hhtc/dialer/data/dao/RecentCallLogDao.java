@@ -1,5 +1,6 @@
 package com.hhtc.dialer.data.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -21,8 +22,8 @@ public interface RecentCallLogDao {
      *
      * @return
      */
-    @Query("SELECT * FROM recent_call_log")
-    List<RecentCallLog> getAllCallLog();
+    @Query("SELECT * FROM recent_call_log ORDER BY recent_time DESC")
+    LiveData<List<RecentCallLog>> loadCallLogAll();
 
     /**
      * 更加名字查询所有通话记录
@@ -31,7 +32,16 @@ public interface RecentCallLogDao {
      * @return
      */
     @Query("SELECT * FROM recent_call_log WHERE recent_name=:name")
-    List<RecentCallLog> getAllCallLogByName(String name);
+    List<RecentCallLog> loadCallLogByName(String name);
+
+    /**
+     * 查询传统短话记录是否存在
+     * @param time
+     * @param type
+     * @return
+     */
+    @Query("SELECT * FROM recent_call_log WHERE recent_time=:time AND recent_type=:type")
+    RecentCallLog loadCallLogTradition(long time, int type);
 
     /**
      * 插入

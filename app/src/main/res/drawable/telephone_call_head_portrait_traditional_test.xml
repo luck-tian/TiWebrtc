@@ -4,7 +4,7 @@
 
     <item>
         <shape android:shape="oval">
-            <solid android:color="@color/dialer_main_favorite_item_text_color" />
+            <solid android:color="@color/dialer_main_tab_layout_item_normal" />
             <corners android:radius="180dp" />
             <padding
                 android:bottom="15dp"

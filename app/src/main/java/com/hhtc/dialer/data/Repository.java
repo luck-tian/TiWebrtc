@@ -139,22 +139,17 @@ public class Repository {
     }
 
 
-    public void getAllCallLog(final LoadDataCallback<RecentModel> callback) {
+    public void loadCallLogAll(final LoadListLiveCallback<RecentCallLog> callback) {
         TelephoneThreadDispatcher.getInstance().execute(() -> {
-            List<RecentCallLog> allCallLog = database.getRecentCallLogDao().getAllCallLog();
-            //排序 分类
-            if (allCallLog.isEmpty()) {
-                callback.onDataNotAvailable();
-            } else {
-                callback.onTasksLoaded(null);
-            }
+            LiveData<List<RecentCallLog>> listLiveData = database.getRecentCallLogDao().loadCallLogAll();
+            callback.onLiveData(listLiveData);
         }, TelephoneThreadDispatcher.DispatcherType.WORK);
     }
 
 
-    public void getAllCallLogByName(String name, final LoadDataCallback<RecentCallLog> callback) {
+    public void loadCallLogByName(String name, final LoadDataCallback<RecentCallLog> callback) {
         TelephoneThreadDispatcher.getInstance().execute(() -> {
-            List<RecentCallLog> allCallLogByName = database.getRecentCallLogDao().getAllCallLogByName(name);
+            List<RecentCallLog> allCallLogByName = database.getRecentCallLogDao().loadCallLogByName(name);
             if (allCallLogByName.isEmpty()) {
                 callback.onDataNotAvailable();
             } else {
@@ -186,6 +181,18 @@ public class Repository {
         TelephoneThreadDispatcher.getInstance().execute(() -> {
             LiveData<DialerContact> dialerContactLiveData = database.getDialerContactDao().loadContactById(contactId);
             callback.onLiveData(dialerContactLiveData);
+        }, TelephoneThreadDispatcher.DispatcherType.WORK);
+    }
+
+    public void loadCallLogTradition(long time, int type, LoadUniqueCallback<RecentCallLog> callback) {
+        TelephoneThreadDispatcher.getInstance().execute(() -> {
+            RecentCallLog recentCallLog = database.getRecentCallLogDao().loadCallLogTradition(time, type);
+
+            if (Objects.isNull(recentCallLog)) {
+                callback.onDataNotAvailable();
+            } else {
+                callback.onTasksLoaded(recentCallLog);
+            }
         }, TelephoneThreadDispatcher.DispatcherType.WORK);
     }
 }

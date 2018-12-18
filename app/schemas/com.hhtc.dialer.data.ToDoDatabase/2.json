@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "5d00a62599cd6e1344d37c34e379029b",
+    "identityHash": "178c1dae0532706774c80da1c7722e4b",
     "entities": [
       {
         "tableName": "collect_favorite",
@@ -118,7 +118,7 @@
       },
       {
         "tableName": "recent_call_log",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recent_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recent_name` TEXT, `recent_tel` TEXT, `recent_telOrVideo` TEXT, `recent_time` INTEGER NOT NULL, `recent_photo` TEXT, `recent_type` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recent_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recent_name` TEXT, `recent_tel` TEXT, `recent_telOrVideo` TEXT, `recent_time` INTEGER NOT NULL, `recent_photo` TEXT, `recent_type` INTEGER NOT NULL, `recent_tradition` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -161,6 +161,12 @@
             "columnName": "recent_type",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "mTradition",
+            "columnName": "recent_tradition",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -175,7 +181,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5d00a62599cd6e1344d37c34e379029b\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"178c1dae0532706774c80da1c7722e4b\")"
     ]
   }
 }
