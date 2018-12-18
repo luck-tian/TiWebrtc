@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.hhtc.dialer.R;
 import com.hhtc.dialer.data.Injection;
 import com.hhtc.dialer.data.bean.RecentCallLog;
+import com.hhtc.dialer.utils.IntentProvider;
 import com.hhtc.dialer.utils.intentUnits;
 import com.hhtc.dialer.view.RemoveView;
 
@@ -71,7 +72,8 @@ public class ContactViewHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
-        intentUnits.startShowContact((Activity) contact_name.getContext(), contactModel.getDialerContact().getId());
+        intentUnits.startShowContact((Activity) contact_name.getContext(),
+                IntentProvider.getContactShowProvider(contactModel.getDialerContact().getId()).getIntent(contact_name.getContext()));
     }
 
     @Override

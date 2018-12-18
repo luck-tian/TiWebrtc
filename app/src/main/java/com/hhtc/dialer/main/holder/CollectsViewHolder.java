@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.hhtc.dialer.R;
 import com.hhtc.dialer.data.bean.CollectFavorite;
+import com.hhtc.dialer.utils.IntentProvider;
 import com.hhtc.dialer.utils.intentUnits;
 
 public class CollectsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -38,7 +39,8 @@ public class CollectsViewHolder extends RecyclerView.ViewHolder implements View.
     }
 
     private void speedAction(View view) {
-        intentUnits.startShowContact((Activity) view.getContext(), collectFavorite.getId());
+        intentUnits.startShowContact((Activity) view.getContext(),
+                IntentProvider.getContactShowProvider(collectFavorite.getId()).getIntent(view.getContext().getApplicationContext()));
     }
 
     @Override

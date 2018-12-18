@@ -3,15 +3,19 @@ package com.hhtc.dialer.show;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhtc.dialer.R;
+import com.hhtc.dialer.add.ContactAddOrEditActivity;
 import com.hhtc.dialer.data.bean.DialerContact;
+import com.hhtc.dialer.utils.IntentProvider;
 import com.hhtc.dialer.utils.intentUnits;
 import com.hhtc.dialer.view.ContactShowInfoActionView;
 import com.hhtc.dialer.view.ContactShowInfoView;
@@ -20,7 +24,7 @@ import java.util.Objects;
 
 public class ShowContactInfoActivity extends AppCompatActivity implements Observer<Void> {
 
-    public static final String LOAD_ID = "load_id_show_info";
+    public static final String SHOW = "show";
 
     private ShowContactInViewModel viewModel;
 
@@ -55,12 +59,17 @@ public class ShowContactInfoActivity extends AppCompatActivity implements Observ
 
         viewModel = ViewModelProviders.of(this).get(ShowContactInViewModel.class);
         viewModel.getNotify().observe(this, this);
-        viewModel.loadContact(buildUrlContactId());
-
+        buildUrlContact();
     }
 
-    private long buildUrlContactId() {
-        return getIntent().getLongExtra(LOAD_ID, -1);
+
+    private void buildUrlContact() {
+        Uri data = getIntent().getData();
+        String scheme = Objects.requireNonNull(data).getScheme();
+        if (TextUtils.equals(SHOW, scheme)) {
+            String query = data.getQuery();
+            viewModel.loadContact(Integer.valueOf(query));
+        }
     }
 
 
@@ -90,7 +99,7 @@ public class ShowContactInfoActivity extends AppCompatActivity implements Observ
     }
 
     public void actionEdit(View view) {
-        intentUnits.startAddContact(this, contact.getId());
+        intentUnits.startAddContact(this, IntentProvider.getContactAddOrEditProvider(ContactAddOrEditActivity.EDIT, contact.getId()).getIntent(getApplicationContext()));
     }
 
     public void showShare(View view) {

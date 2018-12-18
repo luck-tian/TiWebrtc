@@ -14,6 +14,11 @@ public abstract class IntentProvider {
     private static final String TAG = IntentProvider.class.getSimpleName();
 
 
+    /**
+     * 调用play
+     *
+     * @return
+     */
     public static IntentProvider getInstallDuoIntentProvider() {
         return new IntentProvider() {
             @Override
@@ -33,6 +38,32 @@ public abstract class IntentProvider {
         };
     }
 
+    public static IntentProvider getContactAddOrEditProvider(String action, long id) {
+        return new IntentProvider() {
+            @Override
+            public Intent getIntent(Context context) {
+                return new Intent(intentUnits.ACTION_ADD_CONTACT,
+                        new Uri.Builder()
+                                .scheme(action)
+                                .query(String.valueOf(id))
+                                .authority(context.getPackageName())
+                                .build());
+            }
+        };
+    }
+
+    public static IntentProvider getContactShowProvider(long id) {
+        return new IntentProvider() {
+            @Override
+            public Intent getIntent(Context context) {
+                return new Intent(intentUnits.ACTION_SHOW_CONTACT,
+                        new Uri.Builder()
+                                .scheme("show")
+                                .query(String.valueOf(id))
+                                .build());
+            }
+        };
+    }
 
     public abstract Intent getIntent(Context context);
 }

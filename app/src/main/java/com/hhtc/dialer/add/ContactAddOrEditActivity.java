@@ -4,24 +4,29 @@ import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hhtc.dialer.R;
 import com.hhtc.dialer.data.bean.DialerContact;
+import com.hhtc.dialer.utils.LogUtil;
 import com.hhtc.dialer.view.AddContactInputView;
 
 import java.util.Objects;
 
 public class ContactAddOrEditActivity extends AppCompatActivity implements Observer<Void> {
 
-    public static final String CONTACT_MODEL_ID = "contact_model_id";
+    private static final String TAG = "ContactAddOrEditActivity";
+    public static final String ADD = "add";
+    public static final String EDIT = "edit";
 
     private ImageView contact_img;
 
@@ -56,14 +61,16 @@ public class ContactAddOrEditActivity extends AppCompatActivity implements Obser
     }
 
     private void buildUrl() {
-        Intent intent = getIntent();
-        long contact = intent.getLongExtra(CONTACT_MODEL_ID, 0);
-        if (contact == 0) {
+        Uri data = getIntent().getData();
+        String scheme = Objects.requireNonNull(data,"uri not null!!!!").getScheme();
+        if (TextUtils.equals(ADD, scheme)) {
             dialerContact = new DialerContact();
-        } else {
+        } else if (TextUtils.equals(EDIT, scheme)) {
+            String query = Objects.requireNonNull(data,"edit contact id not null").getQuery();
             mViewModel.getNotify().observe(this, this);
-            mViewModel.loadContact(contact);
+            mViewModel.loadContact(Integer.valueOf(query));
         }
+
     }
 
     @Override

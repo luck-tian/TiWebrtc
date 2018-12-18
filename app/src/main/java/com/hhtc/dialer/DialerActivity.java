@@ -2,6 +2,7 @@ package com.hhtc.dialer;
 
 import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.hhtc.dialer.add.ContactAddOrEditActivity;
 import com.hhtc.dialer.animation.DialerActionButtonAnimation;
 import com.hhtc.dialer.data.tradition.TraditionSynchronise;
 import com.hhtc.dialer.main.DialerFragment;
@@ -23,6 +25,7 @@ import com.hhtc.dialer.main.collects.CollectsFragment;
 import com.hhtc.dialer.main.contacts.ContactsFragment;
 import com.hhtc.dialer.main.recent.RecentFragment;
 import com.hhtc.dialer.permission.PermissionsUtil;
+import com.hhtc.dialer.utils.IntentProvider;
 import com.hhtc.dialer.utils.intentUnits;
 import com.hhtc.dialer.view.TableViewPager;
 
@@ -97,7 +100,6 @@ public class DialerActivity extends AppCompatActivity {
             }
         });
         add_contacts.setOnClickListener(this::addContact);
-
     }
 
 
@@ -128,7 +130,8 @@ public class DialerActivity extends AppCompatActivity {
     }
 
     private void addContact(View view) {
-        intentUnits.startAddContact(DialerActivity.this);
+        intentUnits.startAddContact(DialerActivity.this, IntentProvider.getContactAddOrEditProvider(ContactAddOrEditActivity.ADD, -1).getIntent(getApplicationContext()));
+
     }
 
 }

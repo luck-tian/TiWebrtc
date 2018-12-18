@@ -95,6 +95,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public boolean onLongClick(View v) {
+
         return false;
     }
 }
