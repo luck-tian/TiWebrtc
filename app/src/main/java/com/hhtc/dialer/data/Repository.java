@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import com.hhtc.dialer.data.bean.CollectFavorite;
 import com.hhtc.dialer.data.bean.DialerContact;
 import com.hhtc.dialer.data.bean.RecentCallLog;
+import com.hhtc.dialer.data.tradition.TraditionSynchronise;
 import com.hhtc.dialer.main.recent.RecentModel;
 import com.hhtc.dialer.thread.TelephoneThreadDispatcher;
 
@@ -77,7 +78,19 @@ public class Repository {
 
 
     public void insertContact(DialerContact contact) {
-        TelephoneThreadDispatcher.getInstance().execute(() -> database.getDialerContactDao().insertContact(contact), TelephoneThreadDispatcher.DispatcherType.WORK);
+        TelephoneThreadDispatcher.getInstance().execute(() -> {
+            if (contact.isFavorite()) {
+                CollectFavorite favorite = new CollectFavorite();
+                favorite.setId(contact.getId());
+                favorite.setName(contact.getName());
+                favorite.setTel(contact.getTel());
+                favorite.setVideo(contact.getVideo());
+                favorite.setType(contact.getType());
+                database.getCollectFavoriteDao().insertFavorite(favorite);
+            }
+            database.getDialerContactDao().insertContact(contact);
+
+        }, TelephoneThreadDispatcher.DispatcherType.WORK);
 
     }
 
@@ -111,6 +124,11 @@ public class Repository {
                 favorite.setVideo(contact.getVideo());
                 favorite.setType(contact.getType());
                 database.getCollectFavoriteDao().updateFavorite(favorite);
+            }
+
+            if (contact.getType() == RecentCallLog.TRADITIONAL) {
+                //更新传统电话数据库
+                TraditionSynchronise.changeContact(contact);
             }
 
         }, TelephoneThreadDispatcher.DispatcherType.WORK);
@@ -192,6 +210,28 @@ public class Repository {
                 callback.onDataNotAvailable();
             } else {
                 callback.onTasksLoaded(recentCallLog);
+            }
+        }, TelephoneThreadDispatcher.DispatcherType.WORK);
+    }
+
+    public void loadFavoriteTradition(String name, String tel, int type, LoadUniqueCallback<CollectFavorite> callback) {
+        TelephoneThreadDispatcher.getInstance().execute(() -> {
+            CollectFavorite favorite = database.getCollectFavoriteDao().loadFavoriteTradition(name, tel, type);
+            if (Objects.isNull(favorite)) {
+                callback.onDataNotAvailable();
+            } else {
+                callback.onTasksLoaded(favorite);
+            }
+        }, TelephoneThreadDispatcher.DispatcherType.WORK);
+    }
+
+    public void loadContactLiveTradition(long contactId, LoadUniqueCallback<DialerContact> callback) {
+        TelephoneThreadDispatcher.getInstance().execute(() -> {
+            DialerContact dialerContact = database.getDialerContactDao().loadContactTradition(contactId);
+            if (Objects.isNull(dialerContact)) {
+                callback.onDataNotAvailable();
+            } else {
+                callback.onTasksLoaded(dialerContact);
             }
         }, TelephoneThreadDispatcher.DispatcherType.WORK);
     }

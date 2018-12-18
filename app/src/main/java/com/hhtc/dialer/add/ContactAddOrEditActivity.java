@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.hhtc.dialer.R;
 import com.hhtc.dialer.data.bean.DialerContact;
+import com.hhtc.dialer.data.bean.RecentCallLog;
 import com.hhtc.dialer.utils.LogUtil;
 import com.hhtc.dialer.view.AddContactInputView;
 
@@ -65,6 +66,7 @@ public class ContactAddOrEditActivity extends AppCompatActivity implements Obser
         String scheme = Objects.requireNonNull(data,"uri not null!!!!").getScheme();
         if (TextUtils.equals(ADD, scheme)) {
             dialerContact = new DialerContact();
+            dialerContact.setType(RecentCallLog.BLOCK_CHAIN);
         } else if (TextUtils.equals(EDIT, scheme)) {
             String query = Objects.requireNonNull(data,"edit contact id not null").getQuery();
             mViewModel.getNotify().observe(this, this);

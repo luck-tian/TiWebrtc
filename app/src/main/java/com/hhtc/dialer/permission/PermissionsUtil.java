@@ -51,6 +51,8 @@ public class PermissionsUtil {
                             CALL_PHONE,
                             RECORD_AUDIO,
                             ADD_VOICEMAIL,
+                            READ_CONTACTS,
+                            WRITE_CONTACTS,
                             WRITE_VOICEMAIL,
                             READ_VOICEMAIL));
 

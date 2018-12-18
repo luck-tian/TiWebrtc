@@ -62,6 +62,12 @@ public class DialerContact {
     @ColumnInfo(name = "contact_favorite")
     private boolean favorite;
 
+    /**
+     * 传统电话id
+     */
+    @ColumnInfo(name = "contact_traditionId")
+    private long traditionId;
+
     public DialerContact() {
 
     }
@@ -156,6 +162,14 @@ public class DialerContact {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public long getTraditionId() {
+        return traditionId;
+    }
+
+    public void setTraditionId(long traditionId) {
+        this.traditionId = traditionId;
     }
 
     @Override

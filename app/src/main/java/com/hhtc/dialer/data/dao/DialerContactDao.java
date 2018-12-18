@@ -8,7 +8,6 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.hhtc.dialer.data.bean.CollectFavorite;
 import com.hhtc.dialer.data.bean.DialerContact;
 
 import java.util.List;
@@ -27,6 +26,14 @@ public interface DialerContactDao {
 
 
     /**
+     *
+     * @param contactId
+     * @return
+     */
+    @Query("SELECT * FROM dialer_contact WHERE contact_traditionId=:contactId")
+    DialerContact loadContactTradition(long contactId);
+
+    /**
      * 查询所有
      *
      * @return
@@ -43,6 +50,9 @@ public interface DialerContactDao {
     @Query("SELECT * FROM dialer_contact WHERE contact_id=:id")
     LiveData<DialerContact> loadContactById(long id);
 
+
+    @Query("SELECT * FROM dialer_contact WHERE contact_id=:id")
+    DialerContact loadContactByIdTest(long id);
 
     /**
      * 根据Name
@@ -77,5 +87,6 @@ public interface DialerContactDao {
      */
     @Delete
     void deleteContact(DialerContact contact);
+
 
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "178c1dae0532706774c80da1c7722e4b",
+    "identityHash": "362e428b6046f3713bf6ebf58f7ee3e9",
     "entities": [
       {
         "tableName": "collect_favorite",
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "dialer_contact",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contact_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `contact_name` TEXT, `contact_tel` TEXT, `contact_message` TEXT, `contact_email` TEXT, `contact_video` TEXT, `contact_photo` TEXT, `contact_type` INTEGER NOT NULL, `contact_favorite` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contact_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `contact_name` TEXT, `contact_tel` TEXT, `contact_message` TEXT, `contact_email` TEXT, `contact_video` TEXT, `contact_photo` TEXT, `contact_type` INTEGER NOT NULL, `contact_favorite` INTEGER NOT NULL, `contact_traditionId` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "mId",
@@ -103,6 +103,12 @@
           {
             "fieldPath": "favorite",
             "columnName": "contact_favorite",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "traditionId",
+            "columnName": "contact_traditionId",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -181,7 +187,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"178c1dae0532706774c80da1c7722e4b\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"362e428b6046f3713bf6ebf58f7ee3e9\")"
     ]
   }
 }

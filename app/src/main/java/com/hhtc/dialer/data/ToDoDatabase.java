@@ -49,7 +49,7 @@ public abstract class ToDoDatabase extends RoomDatabase {
         synchronized (sLock) {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                        ToDoDatabase.class, "Dialer.db")
+                        ToDoDatabase.class, "Dialer_Pundxi.db")
                         .addMigrations(migration1_2)
                         .build();
             }

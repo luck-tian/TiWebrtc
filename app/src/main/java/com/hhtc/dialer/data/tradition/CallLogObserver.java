@@ -34,7 +34,7 @@ public class CallLogObserver extends ContentObserver {
         ContentResolver cr = context.getContentResolver();
         Cursor cursor = cr.query(CallLog.Calls.CONTENT_URI, CallLogQuery.getProjection(), null, null, CallLog.Calls.DEFAULT_SORT_ORDER);
         if (Objects.nonNull(cursor)) {
-            TraditionSynchronise.getInstance().analysisCursor(cursor, context);
+            TraditionSynchronise.getInstance().analysisCallLogCursor(cursor, context);
             Objects.requireNonNull(cursor).close();
         }
     }

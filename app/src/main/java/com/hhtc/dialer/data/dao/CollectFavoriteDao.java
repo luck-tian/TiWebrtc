@@ -24,6 +24,15 @@ public interface CollectFavoriteDao {
     LiveData<List<CollectFavorite>> loadFavoriteAll();
 
     /**
+     *
+     * @param name
+     * @param tel
+     * @return
+     */
+    @Query("SELECT * FROM collect_favorite WHERE favorite_name=:name AND favorite_tel=:tel AND favorite_type=:type")
+    CollectFavorite loadFavoriteTradition(String name, String tel,int type);
+
+    /**
      * @param id
      * @return
      */
@@ -54,4 +63,5 @@ public interface CollectFavoriteDao {
      */
     @Delete
     void deleteFavorite(CollectFavorite collectFavorite);
+
 }

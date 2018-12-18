@@ -32,6 +32,11 @@ public class RecentCallLog {
     @Ignore//Block chain
     public static final int BLOCK_CHAIN = 5;
 
+    @IntDef({TRADITIONAL, BLOCK_CHAIN})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface TraditionalOrBlock {
+    }
+
     public static final String TEL_TYPE = "tel";
     public static final String VIDEO_TYPE = "video";
 

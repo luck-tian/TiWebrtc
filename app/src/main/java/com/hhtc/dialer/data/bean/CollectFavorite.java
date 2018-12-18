@@ -39,7 +39,6 @@ public class CollectFavorite {
     /**
      * 语音电话
      */
-    @Nullable
     @ColumnInfo(name = "favorite_video")
     private String mVideo;
 
@@ -47,11 +46,12 @@ public class CollectFavorite {
      * 联系人类型
      */
     @NonNull
+    @RecentCallLog.TraditionalOrBlock
     @ColumnInfo(name = "favorite_type")
     private int mType;
 
 
-    public CollectFavorite(){
+    public CollectFavorite() {
 
     }
 

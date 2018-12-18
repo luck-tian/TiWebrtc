@@ -10,6 +10,7 @@ import com.hhtc.dialer.data.LoadLiveCallback;
 import com.hhtc.dialer.data.Repository;
 import com.hhtc.dialer.data.bean.DialerContact;
 import com.hhtc.dialer.data.LoadUniqueCallback;
+import com.hhtc.dialer.data.bean.RecentCallLog;
 
 public class AddContactViewModel extends ViewModel {
 
