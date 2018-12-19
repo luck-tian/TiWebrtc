@@ -2,17 +2,13 @@ package com.hhtc.dialer.data.tradition;
 
 import android.Manifest;
 import android.content.ContentProviderOperation;
-import android.content.ContentProviderResult;
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.RemoteException;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.support.annotation.RequiresPermission;
@@ -31,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import static android.provider.ContactsContract.Contacts.Entity.RAW_CONTACT_ID;
-import static android.provider.ContactsContract.Directory.DISPLAY_NAME;
 import static com.hhtc.dialer.data.bean.RecentCallLog.TRADITIONAL;
 
 public class TraditionSynchronise {
@@ -174,6 +169,8 @@ public class TraditionSynchronise {
                     public void onTasksLoaded(DialerContact data) {
                         //存在该条记录则放弃操作
                         LogUtil.i(TAG, "onTasksLoaded: dialerContact 存在 " + data.toString());
+                        dialerContact.setId(data.getId());
+                        Injection.provideTasksRepository(context).insertContact(dialerContact);
                     }
 
                     @Override
@@ -197,8 +194,7 @@ public class TraditionSynchronise {
      */
     public static void changeContact(DialerContact contact) {
         if (Objects.nonNull(context)) {
-            ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
-            ContentProviderOperation op = null;
+            ArrayList<ContentProviderOperation> ops = new ArrayList<>();
             ContentValues values = new ContentValues();
             values.put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.getName());
             Uri uri = ContactsContract.Data.CONTENT_URI;
@@ -207,17 +203,35 @@ public class TraditionSynchronise {
                             new String[]{contact.getTraditionId() + "", ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE})
                     .withYieldAllowed(true);
             builder.withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.getName());
-            LogUtil.i(TAG, "changeContact: contact.getName() "+contact.getName());
             ops.add(builder.build());
             try {
-                ContentProviderResult[] results = context.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            } catch (OperationApplicationException e) {
-                e.printStackTrace();
+                context.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+            } catch (Exception e) {
+                LogUtil.i(TAG, "changeContact: " + Log.getStackTraceString(e));
             }
             ops.clear();
 
+
+        }
+    }
+
+
+    /**
+     * 删除联系人
+     *
+     * @param contact
+     */
+    public static void deleteContact(DialerContact contact) {
+        if (Objects.nonNull(context)) {
+            Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
+            ContentResolver resolver = context.getContentResolver();
+            Cursor cursor = resolver.query(uri, new String[]{ContactsContract.Data._ID},"display_name=?", new String[]{contact.getName()}, null);
+            if(Objects.requireNonNull(cursor).moveToFirst()){
+                int id = cursor.getInt(0);
+                resolver.delete(uri, "display_name=?", new String[]{contact.getName()});
+                uri = Uri.parse("content://com.android.contacts/data");
+                resolver.delete(uri, "raw_contact_id=?", new String[]{id+""});
+            }
 
         }
     }

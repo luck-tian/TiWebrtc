@@ -87,6 +87,11 @@ public class Repository {
                 favorite.setVideo(contact.getVideo());
                 favorite.setType(contact.getType());
                 database.getCollectFavoriteDao().insertFavorite(favorite);
+            } else {
+                CollectFavorite favorite = database.getCollectFavoriteDao().loadFavoriteTradition(contact.getName(), contact.getTel(), contact.getType());
+                if (Objects.nonNull(favorite)) {
+                    database.getCollectFavoriteDao().deleteFavorite(favorite);
+                }
             }
             database.getDialerContactDao().insertContact(contact);
 
@@ -151,6 +156,9 @@ public class Repository {
             CollectFavorite favorite = loadFavoriteById(contact.getId());
             if (!Objects.isNull(favorite)) {
                 deleteFavorite(favorite);
+            }
+            if (contact.getType() == RecentCallLog.TRADITIONAL) {
+                TraditionSynchronise.deleteContact(contact);
             }
         }, TelephoneThreadDispatcher.DispatcherType.WORK);
 
