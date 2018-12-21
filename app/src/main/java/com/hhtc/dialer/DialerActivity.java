@@ -102,6 +102,13 @@ public class DialerActivity extends AppCompatActivity {
         add_contacts.setOnClickListener(this::addContact);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (action_button.getVisibility() == View.GONE) {
+            DialerActionButtonAnimation.scaleIn(action_button);
+        }
+    }
 
     private List<DialerFragment> createPager() {
         List<DialerFragment> pagers = new ArrayList<>();
@@ -126,7 +133,8 @@ public class DialerActivity extends AppCompatActivity {
 
 
     private void actionButton(View view) {
-
+        DialerActionButtonAnimation.scaleOut(view);
+        intentUnits.startPlate(DialerActivity.this, IntentProvider.getPlateProvider().getIntent(getApplicationContext()));
     }
 
     private void addContact(View view) {

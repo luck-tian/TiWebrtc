@@ -65,5 +65,17 @@ public abstract class IntentProvider {
         };
     }
 
+    public static IntentProvider getPlateProvider() {
+        return new IntentProvider() {
+            @Override
+            public Intent getIntent(Context context) {
+                return new Intent(intentUnits.ACTION_PLATE,
+                        new Uri.Builder()
+                                .scheme("plate")
+                                .build());
+            }
+        };
+    }
+
     public abstract Intent getIntent(Context context);
 }

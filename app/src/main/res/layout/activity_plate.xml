@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".plate.PlateActivity">
+
+    <RelativeLayout
+        android:id="@+id/search_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/search_layout_margin_title_bar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/search_layout" />
+    </RelativeLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/plate_tab_layout_height"
+        android:layout_marginTop="@dimen/plate_tab_layout_margin_top"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_layout"
+        app:layout_scrollFlags="scroll"
+        app:tabIndicatorColor="@color/black"
+        app:tabIndicatorHeight="@dimen/plate_layout_indicator_height"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/gray">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/block"
+            android:textAllCaps="false" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/tradition"
+            android:textAllCaps="false" />
+    </android.support.design.widget.TabLayout>
+
+
+    <TextView
+        android:id="@+id/call_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="@dimen/plate_edit_text_margin_top"
+        android:onClick="callTips"
+        android:text="@string/plate_input_tips_call"
+        android:textColor="@color/black"
+        android:textSize="@dimen/plate_input_text_size"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/input"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
+    <EditText
+        android:id="@+id/input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/plate_edit_text_margin_top"
+        android:background="@null"
+        android:hint="@string/plate_input_hint"
+        android:maxWidth="@dimen/plate_edit_text_max_width"
+        android:maxLines="4"
+        android:textColor="@color/mediumseagreen"
+        android:textColorHint="@color/limegreen"
+        android:textSize="@dimen/plate_input_text_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/call_tips"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
+</android.support.constraint.ConstraintLayout>

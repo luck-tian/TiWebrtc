@@ -137,13 +137,14 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             linearLayoutManager.scrollToPositionWithOffset(position, 0);
         }
         floatingButton.show();
+        itemSwipeClose();
     }
 
     private int getPosByTag(String text) {
         int result = -1;
         for (int i = 0; i < models.size(); i++) {
-            ContactModel contactModle = models.get(i);
-            if (!Objects.isNull(contactModle) && TextUtils.equals(models.get(i).getClassify(), text)) {
+            ContactModel contactModel = models.get(i);
+            if (!Objects.isNull(contactModel) && TextUtils.equals(models.get(i).getClassify(), text)) {
                 result = i;
             }
         }

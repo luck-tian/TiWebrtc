@@ -1,6 +1,5 @@
 package com.hhtc.dialer.main.contacts;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hhtc.dialer.R;
-import com.hhtc.dialer.data.bean.DialerContact;
 import com.hhtc.dialer.main.DialerFragment;
 import com.hhtc.dialer.main.FloatingViewModel;
 import com.hhtc.dialer.view.DialerContactBarView;

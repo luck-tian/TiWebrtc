@@ -71,4 +71,17 @@
     <dimen name="dialer_remove_view_delete_icon_size">20dp</dimen>
     <dimen name="contact_item_delete_padding">5dp</dimen>
     <dimen name="contact_item_delete_size">80dp</dimen>
+    <dimen name="search_background_radius">180dp</dimen>
+    <dimen name="search_tips_text_size">12sp</dimen>
+    <dimen name="search_icon_padding_start">14dp</dimen>
+    <dimen name="search_tips_padding_start">7dp</dimen>
+    <dimen name="search_layout_margin">20dp</dimen>
+    <dimen name="search_layout_height">40dp</dimen>
+    <dimen name="search_layout_margin_title_bar">30dp</dimen>
+    <dimen name="plate_tab_layout_height">50dp</dimen>
+    <dimen name="plate_tab_layout_margin_top">5dp</dimen>
+    <dimen name="plate_layout_indicator_height">1dp</dimen>
+    <dimen name="plate_edit_text_max_width">300dp</dimen>
+    <dimen name="plate_input_text_size">40sp</dimen>
+    <dimen name="plate_edit_text_margin_top">80dp</dimen>
 </resources>

@@ -112,29 +112,45 @@
             android:name=".add.ContactAddOrEditActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.addContact" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="add" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.addContact" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="edit" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".show.ShowContactInfoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.showContact" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="show" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".plate.PlateActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.plate" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="plate" />
+            </intent-filter>
+
         </activity>
     </application>
 

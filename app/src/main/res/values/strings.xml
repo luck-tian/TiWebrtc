@@ -34,4 +34,11 @@
     <string name="show_contact_info_share">share</string>
     <string name="show_contact_info_favorite">favorite</string>
     <string name="show_contact_info_block">block</string>
+
+    <string name="search_layout_tips">search</string>
+    <string name="block">BlockChain</string>
+    <string name="tradition">Tradition</string>
+    <string name="plate_input_tips_call">call.</string>
+
+    <string name="plate_input_hint">please enter</string>
 </resources>
