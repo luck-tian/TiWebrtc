@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".call.fun.SIPActivity">
+
+    <TextView
+        android:id="@+id/remoteName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sip_title_margin_top"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/plate_input_text_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.hhtc.dialer.view.CallTimerView
+        android:id="@+id/call_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/show_contact_info_action_text_size"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/remoteName" />
+
+
+    <TableLayout
+        android:id="@+id/dialpad_action"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline4"
+        app:layout_constraintVertical_weight="1">
+
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+
+            <com.hhtc.dialer.view.SwitchIconView
+                android:id="@+id/call_hone_microphone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="8dp"
+                android:scaleType="fitXY"
+                app:si_disabled_color="#ffffffff"
+                app:si_tint_color="#ffffffff"
+                app:srcCompat="@drawable/call_hone_microphone_s" />
+
+            <com.hhtc.dialer.view.SwitchIconView
+                android:id="@+id/call_hone_number_keys"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="8dp"
+                android:scaleType="fitXY"
+                app:si_disabled_color="#ffffffff"
+                app:si_tint_color="#ffffffff"
+                app:srcCompat="@drawable/call_hone_microphone_s" />
+
+            <com.hhtc.dialer.view.SwitchIconView
+                android:id="@+id/call_hone_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="8dp"
+                android:scaleType="fitXY"
+                app:si_disabled_color="#ffffffff"
+                app:si_enabled="false"
+                app:si_tint_color="#ffffffff"
+                app:srcCompat="@drawable/call_hone_voice" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <com.hhtc.dialer.view.SwitchIconView
+                android:id="@+id/call_hone_add_contacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="8dp"
+                android:scaleType="fitXY"
+                app:si_disabled_color="#ffffffff"
+                app:si_tint_color="#ffffffff"
+                app:srcCompat="@drawable/call_hone_add_contacts" />
+
+            <com.hhtc.dialer.view.SwitchIconView
+                android:id="@+id/call_hone_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="8dp"
+                android:scaleType="fitXY"
+                app:si_disabled_color="#ffffffff"
+                app:si_tint_color="#ffffffff"
+                app:srcCompat="@drawable/call_hone_video" />
+
+            <com.hhtc.dialer.view.SwitchIconView
+                android:id="@+id/call_hone_address_book"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="8dp"
+                android:scaleType="fitXY"
+                app:si_disabled_color="#ffffffff"
+                app:si_tint_color="#ffffffff"
+                app:srcCompat="@drawable/call_hone_address_book" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:id="@+id/end_call"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="@drawable/call_hone_action_selector"
+                android:clickable="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:src="@drawable/call_hone_action" />
+            </RelativeLayout>
+        </TableRow>
+    </TableLayout>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+</android.support.constraint.ConstraintLayout>

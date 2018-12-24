@@ -49,4 +49,8 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
 
     implementation 'com.github.promeg:tinypinyin:2.0.3'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'org.webrtc:google-webrtc:1.0.25331'
+    implementation 'io.socket:socket.io-client:1.0.0'
+
 }

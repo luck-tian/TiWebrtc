@@ -67,4 +67,20 @@
         
         <attr name="minDistRequestDisallowParent" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="SwitchIconView">
+        <attr name="si_tint_color" format="color"/>
+        <attr name="si_animation_duration" format="integer"/>
+        <attr name="si_disabled_alpha" format="float"/>
+        <attr name="si_disabled_color" format="color"/>
+        <attr name="si_enabled" format="boolean"/>
+        <attr name="si_no_dash" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="CallTimerView">
+        <attr name="android:textSize"/>
+        <attr name="android:textAppearance"/>
+        <attr name="android:textColor"/>
+    </declare-styleable>
+
 </resources>

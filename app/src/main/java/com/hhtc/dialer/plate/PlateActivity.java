@@ -1,8 +1,13 @@
 package com.hhtc.dialer.plate;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,9 +21,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.hhtc.dialer.R;
+import com.hhtc.dialer.TelephoneCall;
+import com.hhtc.dialer.TelephoneIncomingTelegram;
+import com.hhtc.dialer.call.service.TelephoneService;
+import com.hhtc.dialer.thread.TelephoneThreadDispatcher;
 import com.hhtc.dialer.utils.IntentProvider;
+import com.hhtc.dialer.utils.LogUtil;
 import com.hhtc.dialer.utils.TextWatcherUtil;
 import com.hhtc.dialer.utils.intentUnits;
+
+import java.util.Objects;
 
 public class PlateActivity extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener {
 
@@ -28,12 +40,30 @@ public class PlateActivity extends AppCompatActivity implements TabLayout.BaseOn
 
     private String block, tradition;
 
+    TelephoneCall telephoneCall;
+
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            telephoneCall = TelephoneCall.Stub.asInterface(service);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            telephoneCall = null;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plate);
         initView();
         setData();
+        Intent intent = new Intent(this, TelephoneService.class);
+        intent.setAction(intentUnits.ACTION_TELEPHONE);
+        bindService(intent, serviceConnection, BIND_AUTO_CREATE);
     }
 
     private void initView() {
@@ -47,11 +77,17 @@ public class PlateActivity extends AppCompatActivity implements TabLayout.BaseOn
         input.setInputType(InputType.TYPE_CLASS_TEXT);
     }
 
+    @Override
+    protected void onDestroy() {
+        unbindService(serviceConnection);
+        super.onDestroy();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onResume() {
         super.onResume();
-        getMainExecutor().execute(() -> showSoftInputFromWindow(PlateActivity.this, input));
+        TelephoneThreadDispatcher.getInstance().execute(() -> showSoftInputFromWindow(PlateActivity.this, input),TelephoneThreadDispatcher.DispatcherType.UI);
     }
 
     public void callTips(View view) {
@@ -133,7 +169,14 @@ public class PlateActivity extends AppCompatActivity implements TabLayout.BaseOn
      * 拨打block电话
      */
     private void startBlockCall() {
-        Toast.makeText(getApplicationContext(), "startBlockCall", Toast.LENGTH_SHORT).show();
+        String remoteName = input.getText().toString();
+        if (Objects.nonNull(telephoneCall)) {
+            try {
+                telephoneCall.makeCall(remoteName);
+            } catch (RemoteException e) {
+
+            }
+        }
     }
 
     @Override

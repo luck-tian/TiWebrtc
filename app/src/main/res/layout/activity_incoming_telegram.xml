@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dialer_main_tab_layout_item_normal"
+    tools:context=".call.fun.IncomingTelegramActivity">
+
+    <TextView
+        android:id="@+id/remoteName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/telegram_remote_name_margin_top"
+        android:text="TIN"
+        android:textColor="#0BCD74"
+        android:textSize="@dimen/plate_input_text_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <RelativeLayout
+        android:id="@+id/answer"
+        android:layout_width="@dimen/telegram_action_button_size"
+        android:layout_height="@dimen/telegram_action_button_size"
+        android:background="@drawable/telegram_call_button_ripple"
+        android:onClick="answer"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
+        app:layout_constraintLeft_toLeftOf="@id/guideline2">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/telegram_call_true"
+            android:onClick="answer"
+            android:src="@drawable/telegram_answer_icon" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/hangUp"
+        android:layout_width="@dimen/telegram_action_button_size"
+        android:layout_height="@dimen/telegram_action_button_size"
+        android:background="@drawable/telegram_call_button_ripple"
+        android:onClick="hangUp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="@id/guideline3">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/telegram_call_true"
+            android:onClick="hangUp"
+            android:src="@drawable/telegram_hang_up" />
+    </RelativeLayout>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+</android.support.constraint.ConstraintLayout>

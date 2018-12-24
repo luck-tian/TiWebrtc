@@ -1,10 +1,15 @@
 package com.hhtc.dialer.utils;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.telecom.PhoneAccount;
 import android.telephony.TelephonyManager;
+
+import java.util.List;
 
 /**
  * Intent 提供者
@@ -127,6 +132,71 @@ public abstract class IntentProvider {
                         Uri.fromParts("content", "ui.email.android.com/view/mailbox", null));
             }
         };
+    }
+
+    public static IntentProvider getTelegramProvider(String remoteName) {
+        return new IntentProvider() {
+            @Override
+            public Intent getIntent(Context context) {
+                return new Intent(intentUnits.ACTION_TELEGRAM,
+                        new Uri.Builder()
+                                .scheme("telegram")
+                                .query(remoteName)
+                                .build());
+            }
+        };
+    }
+
+    public static IntentProvider getCallProvider(String remoteName) {
+        return new IntentProvider() {
+            @Override
+            public Intent getIntent(Context context) {
+                return new Intent(intentUnits.ACTION_SIP_CALL,
+                        new Uri.Builder()
+                                .scheme("call")
+                                .query(remoteName)
+                                .build());
+            }
+        };
+    }
+
+    public static IntentProvider getCallServiceProvider() {
+        return new IntentProvider() {
+            @Override
+            public Intent getIntent(Context context) {
+                Intent intent = new Intent(intentUnits.ACTION_TELEPHONE,
+                        new Uri.Builder()
+                                .scheme("service")
+                                .build());
+                return createExplicitFromImplicitIntent(context,intent);
+
+            }
+        };
+    }
+
+    public static Intent createExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
+        // Retrieve all services that can match the given intent
+        PackageManager pm = context.getPackageManager();
+        List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
+
+        // Make sure only one match was found
+        if (resolveInfo == null || resolveInfo.size() != 1) {
+            return null;
+        }
+
+        // Get component info and create ComponentName
+        ResolveInfo serviceInfo = resolveInfo.get(0);
+        String packageName = serviceInfo.serviceInfo.packageName;
+        String className = serviceInfo.serviceInfo.name;
+        ComponentName component = new ComponentName(packageName, className);
+
+        // Create a new intent. Use the old one for extras and such reuse
+        Intent explicitIntent = new Intent(implicitIntent);
+
+        // Set the component to be explicit
+        explicitIntent.setComponent(component);
+
+        return explicitIntent;
     }
 
     public abstract Intent getIntent(Context context);

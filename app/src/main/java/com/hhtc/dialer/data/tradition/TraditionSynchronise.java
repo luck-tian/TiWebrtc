@@ -1,6 +1,5 @@
 package com.hhtc.dialer.data.tradition;
 
-import android.Manifest;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -11,7 +10,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
-import android.support.annotation.RequiresPermission;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -52,10 +50,7 @@ public class TraditionSynchronise {
         }
     }
 
-    @RequiresPermission(allOf = {
-            Manifest.permission.READ_CALL_LOG,
-            Manifest.permission.READ_CONTACTS,
-            Manifest.permission.WRITE_CONTACTS})
+
     public void startSynchronization(Context context) {
         //同步数据请求权限
         TelephoneThreadDispatcher.getInstance().execute(() -> {

@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import com.hhtc.dialer.data.bean.CollectFavorite;
 import com.hhtc.dialer.data.bean.DialerContact;
 import com.hhtc.dialer.data.bean.RecentCallLog;
+import com.hhtc.dialer.data.bean.UserInfo;
 import com.hhtc.dialer.data.tradition.TraditionSynchronise;
 import com.hhtc.dialer.main.recent.RecentModel;
 import com.hhtc.dialer.thread.TelephoneThreadDispatcher;
@@ -242,5 +243,22 @@ public class Repository {
                 callback.onTasksLoaded(dialerContact);
             }
         }, TelephoneThreadDispatcher.DispatcherType.WORK);
+    }
+
+    public void loadUserInfo(LoadLiveCallback<UserInfo> callback) {
+        TelephoneThreadDispatcher.getInstance().execute(() -> {
+            LiveData<UserInfo> userInfoLiveData = database.getUserInfoDao().loadUserInfo();
+            callback.onLiveData(userInfoLiveData);
+        }, TelephoneThreadDispatcher.DispatcherType.WORK);
+    }
+
+    public void insertUserInfo(UserInfo info) {
+        TelephoneThreadDispatcher.getInstance().execute(() -> {
+            database.getUserInfoDao().insertUserInfo(info);
+        }, TelephoneThreadDispatcher.DispatcherType.WORK);
+    }
+
+    public UserInfo loadUserInfoWDF() {
+        return database.getUserInfoDao().loadUserInfoWDF();
     }
 }

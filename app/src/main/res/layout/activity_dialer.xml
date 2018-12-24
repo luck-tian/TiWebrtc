@@ -21,6 +21,16 @@
         app:layout_constraintBottom_toTopOf="@id/title_line"
         app:layout_constraintLeft_toLeftOf="parent" />
 
+    <TextView
+        android:id="@+id/localName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/show_contact_info_action"
+        android:textColor="@color/black"
+        android:textSize="@dimen/show_contact_info_action_hint_size"
+        app:layout_constraintBottom_toTopOf="@id/title_line"
+        app:layout_constraintLeft_toRightOf="@id/title_tips" />
+
     <ImageButton
         android:id="@+id/add_contacts"
         style="@style/dialer_main_image"

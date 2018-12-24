@@ -27,12 +27,14 @@ import android.support.annotation.NonNull;
 import com.hhtc.dialer.data.bean.CollectFavorite;
 import com.hhtc.dialer.data.bean.DialerContact;
 import com.hhtc.dialer.data.bean.RecentCallLog;
+import com.hhtc.dialer.data.bean.UserInfo;
 import com.hhtc.dialer.data.dao.CollectFavoriteDao;
 import com.hhtc.dialer.data.dao.DialerContactDao;
 import com.hhtc.dialer.data.dao.RecentCallLogDao;
+import com.hhtc.dialer.data.dao.UserInfoDao;
 
 
-@Database(entities = {CollectFavorite.class, DialerContact.class, RecentCallLog.class}, version = 2)
+@Database(entities = {CollectFavorite.class, DialerContact.class, RecentCallLog.class, UserInfo.class}, version = 3)
 public abstract class ToDoDatabase extends RoomDatabase {
 
     private static ToDoDatabase INSTANCE;
@@ -42,6 +44,8 @@ public abstract class ToDoDatabase extends RoomDatabase {
     public abstract DialerContactDao getDialerContactDao();
 
     public abstract RecentCallLogDao getRecentCallLogDao();
+
+    public abstract UserInfoDao getUserInfoDao();
 
     private static final Object sLock = new Object();
 

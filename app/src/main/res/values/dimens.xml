@@ -84,4 +84,8 @@
     <dimen name="plate_edit_text_max_width">300dp</dimen>
     <dimen name="plate_input_text_size">40sp</dimen>
     <dimen name="plate_edit_text_margin_top">80dp</dimen>
+    <dimen name="telegram_remote_name_margin_top">60dp</dimen>
+    <dimen name="telegram_action_button_size">56dp</dimen>
+    <dimen name="telegram_window_size">80dp</dimen>
+    <dimen name="sip_title_margin_top">60dp</dimen>
 </resources>

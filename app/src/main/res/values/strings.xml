@@ -43,4 +43,8 @@
     <string name="plate_input_hint">please enter</string>
     <string name="plate_inout_not_null">the number cannot be empty</string>
     <string name="plate_call_line">on the line</string>
+
+    <string name="poor_network">poor network environment</string>
+
+    <string name="other_person_phone">the other person is on the phone</string>
 </resources>

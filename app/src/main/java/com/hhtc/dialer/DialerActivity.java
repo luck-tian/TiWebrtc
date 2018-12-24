@@ -1,21 +1,33 @@
 package com.hhtc.dialer;
 
 import android.Manifest;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhtc.dialer.add.ContactAddOrEditActivity;
 import com.hhtc.dialer.animation.DialerActionButtonAnimation;
+import com.hhtc.dialer.call.service.TelephoneService;
+import com.hhtc.dialer.call.util.DataUtils;
+import com.hhtc.dialer.data.bean.UserInfo;
 import com.hhtc.dialer.data.tradition.TraditionSynchronise;
 import com.hhtc.dialer.main.DialerFragment;
 import com.hhtc.dialer.main.DialerTabPagerAdapter;
@@ -48,6 +60,7 @@ public class DialerActivity extends AppCompatActivity {
     private DialerTabPagerAdapter adapter;
     private String[] stringTips;
     private FloatingViewModel mSharedViewModel;
+    private TextView localName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +77,7 @@ public class DialerActivity extends AppCompatActivity {
         page_navigation = findViewById(R.id.page_navigation);
         content_pager = findViewById(R.id.content_pager);
         action_button = findViewById(R.id.action_button);
+        localName = findViewById(R.id.localName);
         ActivityCompat.requestPermissions(this, PermissionsUtil.allPhoneGroupPermissionsUsedInDialer.toArray(new String[PermissionsUtil.allPhoneGroupPermissionsUsedInDialer.size()]),
                 REQUEST_READ_CONTACTS);
     }
@@ -75,6 +89,7 @@ public class DialerActivity extends AppCompatActivity {
         //开始同步电话数据
         if (ActivityCompat.checkSelfPermission(DialerActivity.this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
             TraditionSynchronise.getInstance().startSynchronization(getApplicationContext());
+
         }
     }
 
@@ -99,7 +114,26 @@ public class DialerActivity extends AppCompatActivity {
                 DialerActionButtonAnimation.scaleIn(action_button);
             }
         });
+        mSharedViewModel.getNotify().observe(this, aVoid -> mSharedViewModel.getUserInfo().observe(DialerActivity.this, DialerActivity.this::onChanged));
+        mSharedViewModel.loadUserInfo();
         add_contacts.setOnClickListener(this::addContact);
+    }
+
+    public void onChanged(@Nullable UserInfo info) {
+        if (Objects.nonNull(info)) {
+            DataUtils.userName = Objects.requireNonNull(info).getName();
+            localName.setText(Objects.requireNonNull(info).getName());
+            //启动服务
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Intent intent = new Intent(this, TelephoneService.class);
+                intent.setAction(intentUnits.ACTION_TELEPHONE);
+                startForegroundService(intent);
+            } else {
+                intentUnits.startService(getApplicationContext(), IntentProvider.getCallServiceProvider().getIntent(getApplicationContext()));
+            }
+        } else {
+            showInputDialog();
+        }
     }
 
     @Override
@@ -140,6 +174,22 @@ public class DialerActivity extends AppCompatActivity {
     private void addContact(View view) {
         intentUnits.startAddContact(DialerActivity.this, IntentProvider.getContactAddOrEditProvider(ContactAddOrEditActivity.ADD, -1).getIntent(getApplicationContext()));
 
+    }
+
+
+    private void showInputDialog() {
+        final EditText editText = new EditText(this);
+        AlertDialog.Builder inputDialog =
+                new AlertDialog.Builder(this);
+        inputDialog.setTitle("请输入ID").setView(editText);
+        inputDialog.setPositiveButton("确定",
+                (dialog, which) -> {
+                    if (!TextUtils.isEmpty(editText.getText().toString())) {
+                        UserInfo info = new UserInfo();
+                        info.setName(editText.getText().toString());
+                        mSharedViewModel.getRepository().insertUserInfo(info);
+                    }
+                }).show();
     }
 
 }

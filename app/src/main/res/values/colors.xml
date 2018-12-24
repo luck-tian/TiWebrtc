@@ -475,4 +475,5 @@
 
     <color name="add_contact_button_text">#FF1E1E1E</color>
 
+    <color name="telegram_call_true_color">#80ffffff</color>
 </resources>
