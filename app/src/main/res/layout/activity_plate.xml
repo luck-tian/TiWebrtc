@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context=".plate.PlateActivity">
 
     <RelativeLayout
@@ -73,6 +74,9 @@
         android:hint="@string/plate_input_hint"
         android:maxWidth="@dimen/plate_edit_text_max_width"
         android:maxLines="4"
+        android:enabled="true"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         android:textColor="@color/mediumseagreen"
         android:textColorHint="@color/limegreen"
         android:textSize="@dimen/plate_input_text_size"

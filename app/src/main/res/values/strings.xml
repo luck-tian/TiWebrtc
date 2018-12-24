@@ -41,4 +41,6 @@
     <string name="plate_input_tips_call">call.</string>
 
     <string name="plate_input_hint">please enter</string>
+    <string name="plate_inout_not_null">the number cannot be empty</string>
+    <string name="plate_call_line">on the line</string>
 </resources>

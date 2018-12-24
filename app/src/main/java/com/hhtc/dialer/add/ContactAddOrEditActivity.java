@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -63,12 +64,12 @@ public class ContactAddOrEditActivity extends AppCompatActivity implements Obser
 
     private void buildUrl() {
         Uri data = getIntent().getData();
-        String scheme = Objects.requireNonNull(data,"uri not null!!!!").getScheme();
+        String scheme = Objects.requireNonNull(data, "uri not null!!!!").getScheme();
         if (TextUtils.equals(ADD, scheme)) {
             dialerContact = new DialerContact();
             dialerContact.setType(RecentCallLog.BLOCK_CHAIN);
         } else if (TextUtils.equals(EDIT, scheme)) {
-            String query = Objects.requireNonNull(data,"edit contact id not null").getQuery();
+            String query = Objects.requireNonNull(data, "edit contact id not null").getQuery();
             mViewModel.getNotify().observe(this, this);
             mViewModel.loadContact(Integer.valueOf(query));
         }
@@ -127,4 +128,12 @@ public class ContactAddOrEditActivity extends AppCompatActivity implements Obser
     }
 
 
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            save(null);
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
 }

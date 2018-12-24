@@ -79,7 +79,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
             tel_number.setText(recentModel.getCallLog().getTel());
         }
 
-        call_duration.setText(TimeUtils.millis2String(recentModel.getCallLog().getCallTime(),new SimpleDateFormat("mm:ss")));
+        call_duration.setText(TimeUtils.millis2String(recentModel.getCallLog().getCallTime(),new SimpleDateFormat("HH:mm")));
 
         if (recentModel.getCallLog().isTradition()) {
             photo.setImageResource(R.drawable.telephone_call_head_portrait_traditional_test);

@@ -2,17 +2,23 @@ package com.hhtc.dialer.plate;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.hhtc.dialer.R;
+import com.hhtc.dialer.utils.IntentProvider;
 import com.hhtc.dialer.utils.TextWatcherUtil;
+import com.hhtc.dialer.utils.intentUnits;
 
 public class PlateActivity extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener {
 
@@ -38,6 +44,14 @@ public class PlateActivity extends AppCompatActivity implements TabLayout.BaseOn
 
     private void setData() {
         tab_layout.addOnTabSelectedListener(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getMainExecutor().execute(() -> showSoftInputFromWindow(PlateActivity.this, input));
     }
 
     public void callTips(View view) {
@@ -82,6 +96,44 @@ public class PlateActivity extends AppCompatActivity implements TabLayout.BaseOn
                 TextWatcherUtil.addPhoneNumberTextWatcher(input);
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+
+            if (tab_layout.getSelectedTabPosition() == 0) {
+                startBlockCall();
+            } else {
+                startTraditionCall();
+            }
+
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+
+    }
+
+    /**
+     * 拨打传统电话
+     */
+    private void startTraditionCall() {
+        String number = input.getText().toString();
+        if (TextUtils.isEmpty(number)) {
+            Toast.makeText(getApplicationContext(), R.string.plate_inout_not_null, Toast.LENGTH_SHORT).show();
+        } else if (IntentProvider.isTelephonyCalling(getApplicationContext())) {
+            Toast.makeText(getApplicationContext(), R.string.plate_call_line, Toast.LENGTH_SHORT).show();
+        } else {
+            intentUnits.startTradition(this, IntentProvider.getTraditionProvider(number).getIntent(getApplicationContext()));
+        }
+
+    }
+
+    /**
+     * 拨打block电话
+     */
+    private void startBlockCall() {
+        Toast.makeText(getApplicationContext(), "startBlockCall", Toast.LENGTH_SHORT).show();
     }
 
     @Override

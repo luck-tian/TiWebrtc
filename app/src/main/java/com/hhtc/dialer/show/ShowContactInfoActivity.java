@@ -5,8 +5,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -123,15 +125,27 @@ public class ShowContactInfoActivity extends AppCompatActivity implements Observ
 
 
     public void phoneAction(View view) {
-
+        if (PhoneNumberUtils.isGlobalPhoneNumber(contact.getTel()) && !IntentProvider.isTelephonyCalling(getApplicationContext())) {
+            intentUnits.startTradition(this,
+                    IntentProvider.getTraditionProvider(contact.getTel()).getIntent(getApplicationContext()));
+        }
     }
 
     public void massageAction(View view) {
-
+        if (PhoneNumberUtils.isGlobalPhoneNumber(contact.getTel())) {
+            intentUnits.startTradition(this,
+                    IntentProvider.getSendMessageProvider(contact.getTel()).getIntent(getApplicationContext()));
+        }
     }
 
     public void mailAction(View view) {
-
+        try {
+            intentUnits.startTradition(this,
+                    IntentProvider.getSendMailProvider(contact.getTel()).getIntent(getApplicationContext()));
+        } catch (Exception e) {
+            intentUnits.startTradition(this,
+                    IntentProvider.getStartMailProvider().getIntent(getApplicationContext()));
+        }
     }
 
     public void videoAction(View view) {

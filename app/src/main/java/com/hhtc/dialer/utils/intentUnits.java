@@ -48,4 +48,15 @@ public class intentUnits {
 
         activity.startActivity(intent);
     }
+
+    public static void startTradition(Activity activity, Intent intent) {
+//        ActivityOptionsCompat options =
+//                ActivityOptionsCompat.makeScaleUpAnimation(activity.getWindow().getDecorView(),
+//                        activity.getWindow().getDecorView().getWidth() / 2,
+//                        activity.getWindow().getDecorView().getHeight() / 2,
+//                        0, 0);
+//        ActivityCompat.startActivity(activity, intent, options.toBundle());
+
+        activity.startActivity(intent);
+    }
 }

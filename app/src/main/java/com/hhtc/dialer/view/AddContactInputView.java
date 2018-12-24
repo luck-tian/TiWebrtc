@@ -40,12 +40,14 @@ public class AddContactInputView extends TextInputLayout {
         int hintColor = typedArray.getColor(R.styleable.AddContactInputView_textColorHint, Color.WHITE);
         int input = typedArray.getInt(R.styleable.AddContactInputView_android_inputType, 0);
         String hint = typedArray.getString(R.styleable.AddContactInputView_hint);
+        boolean enableEdit=typedArray.getBoolean(R.styleable.AddContactInputView_enableEdit,true);
         typedArray.recycle();
 
         editText = new TextInputEditText(getContext());
         editText.setHint(hint);
         editText.setInputType(input);
         editText.setHintTextColor(hintColor);
+        editText.setEnabled(enableEdit);
         editText.setTextColor(textColor);
         editText.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
 
