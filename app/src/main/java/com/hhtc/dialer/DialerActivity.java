@@ -1,9 +1,9 @@
 package com.hhtc.dialer;
 
 import android.Manifest;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.DialogInterface;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -21,12 +21,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhtc.dialer.add.ContactAddOrEditActivity;
 import com.hhtc.dialer.animation.DialerActionButtonAnimation;
 import com.hhtc.dialer.call.service.TelephoneService;
-import com.hhtc.dialer.call.util.DataUtils;
 import com.hhtc.dialer.data.bean.UserInfo;
 import com.hhtc.dialer.data.tradition.TraditionSynchronise;
 import com.hhtc.dialer.main.DialerFragment;
@@ -51,6 +49,12 @@ import java.util.Objects;
 public class DialerActivity extends AppCompatActivity {
 
     public static final int REQUEST_READ_CONTACTS = 1;
+
+    public static Uri URI_USER = new Uri.Builder()
+            .scheme("content")
+            .authority("com.hhtc.dialer.user.provider")
+            .query("user")
+            .build();
 
     private TextView title_tips;
     private ImageButton add_contacts;
@@ -89,7 +93,8 @@ public class DialerActivity extends AppCompatActivity {
         //开始同步电话数据
         if (ActivityCompat.checkSelfPermission(DialerActivity.this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
             TraditionSynchronise.getInstance().startSynchronization(getApplicationContext());
-
+            mSharedViewModel.getNotify().observe(this, aVoid -> mSharedViewModel.getUserInfo().observe(DialerActivity.this, DialerActivity.this::onChanged));
+            mSharedViewModel.loadUserInfo();
         }
     }
 
@@ -114,14 +119,13 @@ public class DialerActivity extends AppCompatActivity {
                 DialerActionButtonAnimation.scaleIn(action_button);
             }
         });
-        mSharedViewModel.getNotify().observe(this, aVoid -> mSharedViewModel.getUserInfo().observe(DialerActivity.this, DialerActivity.this::onChanged));
-        mSharedViewModel.loadUserInfo();
+
         add_contacts.setOnClickListener(this::addContact);
+
     }
 
     public void onChanged(@Nullable UserInfo info) {
         if (Objects.nonNull(info)) {
-            DataUtils.userName = Objects.requireNonNull(info).getName();
             localName.setText(Objects.requireNonNull(info).getName());
             //启动服务
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -185,9 +189,10 @@ public class DialerActivity extends AppCompatActivity {
         inputDialog.setPositiveButton("确定",
                 (dialog, which) -> {
                     if (!TextUtils.isEmpty(editText.getText().toString())) {
-                        UserInfo info = new UserInfo();
-                        info.setName(editText.getText().toString());
-                        mSharedViewModel.getRepository().insertUserInfo(info);
+                        ContentResolver resolver = getContentResolver();
+                        ContentValues values = new ContentValues(1);
+                        values.put("user_name", editText.getText().toString());
+                        resolver.insert(URI_USER, values);
                     }
                 }).show();
     }

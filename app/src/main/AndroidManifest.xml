@@ -33,6 +33,8 @@
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--
     We use this to disable the status bar buttons of home, back and recent
     during an incoming call. By doing so this allows us to not show the user
@@ -176,7 +178,8 @@
 
         <service
             android:name=".call.service.TelephoneService"
-            android:enabled="true">
+            android:enabled="true"
+            android:process=":remote">
             <intent-filter>
                 <action android:name="android.intent.action.telephone" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -185,6 +188,10 @@
         </service>
 
         <receiver android:name=".NotificationReceiver" />
+
+        <provider
+            android:name=".userprovider.UserProvider"
+            android:authorities="com.hhtc.dialer.user.provider" />
     </application>
 
 </manifest>

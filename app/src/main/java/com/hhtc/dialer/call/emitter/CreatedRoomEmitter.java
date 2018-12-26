@@ -19,7 +19,6 @@ public class CreatedRoomEmitter extends BaseEmitter {
 
     @Override
     public void pushData(JSONObject data) throws Exception {
-        //socket id
         String socketId = data.getString("id");
         //room id
         String roomId = data.getString("room");

@@ -26,7 +26,6 @@
         android:layout_width="@dimen/telegram_action_button_size"
         android:layout_height="@dimen/telegram_action_button_size"
         android:background="@drawable/telegram_call_button_ripple"
-        android:onClick="answer"
         app:layout_constraintBottom_toBottomOf="@id/guideline"
         app:layout_constraintLeft_toLeftOf="@id/guideline2">
 
@@ -44,7 +43,6 @@
         android:layout_width="@dimen/telegram_action_button_size"
         android:layout_height="@dimen/telegram_action_button_size"
         android:background="@drawable/telegram_call_button_ripple"
-        android:onClick="hangUp"
         app:layout_constraintBottom_toBottomOf="@id/guideline"
         app:layout_constraintRight_toRightOf="@id/guideline3">
 

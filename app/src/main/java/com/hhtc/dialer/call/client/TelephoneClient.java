@@ -1,10 +1,6 @@
 package com.hhtc.dialer.call.client;
 
-import android.app.Application;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.hhtc.dialer.TelephoneIncomingTelegram;
@@ -22,10 +18,7 @@ import com.hhtc.dialer.call.sip.LeaveRoomEmitter;
 import com.hhtc.dialer.call.sip.MakeCallEmitter;
 import com.hhtc.dialer.call.sip.MakeResultEmitter;
 import com.hhtc.dialer.call.sip.TurnDownEmitter;
-import com.hhtc.dialer.data.Injection;
-import com.hhtc.dialer.data.LoadLiveCallback;
-import com.hhtc.dialer.data.Repository;
-import com.hhtc.dialer.data.bean.UserInfo;
+import com.hhtc.dialer.utils.LogUtil;
 
 import org.webrtc.DefaultVideoDecoderFactory;
 import org.webrtc.DefaultVideoEncoderFactory;
@@ -70,13 +63,14 @@ public class TelephoneClient {
 
     private SignallingTransfer signallingTransfer;
 
+
     private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+
 
     private Context context;
 
     private EglBase eglBase;
 
-    private Repository repository;
 
     public TelephoneClient(Context context, String sipServiceAddress) {
         //创建好Socket
@@ -94,15 +88,12 @@ public class TelephoneClient {
         emitter.bindCall(TelephoneCall.obtainCall(null));
         //创建信号传输
         signallingTransfer = new SignallingTransfer(client);
-
-        repository= Injection.provideTasksRepository(context);
-        createAck();
     }
 
     /**
      * 保持连接
      */
-    private void createAck() {
+    public void createAck() {
         executor.scheduleWithFixedDelay(signallingTransfer::connect, 1, 5, TimeUnit.SECONDS);
     }
 
@@ -120,7 +111,7 @@ public class TelephoneClient {
         try {
             client = IO.socket(sipServiceAddress, opts);
         } catch (Exception e) {
-            Log.i(TAG, "webrtc init bad wdf" + Log.getStackTraceString(e));
+            LogUtil.i(TAG, "webrtc init bad wdf" + Log.getStackTraceString(e));
         }
     }
 
@@ -189,19 +180,19 @@ public class TelephoneClient {
 
         boolean acousticEchoCancelerSupported = WebRtcAudioUtils.isAcousticEchoCancelerSupported();
         if (acousticEchoCancelerSupported) {
-            Log.d(TAG, "createJavaAudioDevice: acousticEchoCancelerSupported");
+            LogUtil.d(TAG, "createJavaAudioDevice: acousticEchoCancelerSupported");
             WebRtcAudioUtils.setWebRtcBasedAcousticEchoCanceler(true);
         }
 
         boolean automaticGainControlSupported = WebRtcAudioUtils.isAutomaticGainControlSupported();
         if (automaticGainControlSupported) {
-            Log.d(TAG, "createJavaAudioDevice: automaticGainControlSupported");
+            LogUtil.d(TAG, "createJavaAudioDevice: automaticGainControlSupported");
             WebRtcAudioUtils.setWebRtcBasedAutomaticGainControl(true);
         }
 
         boolean noiseSuppressorSupported = WebRtcAudioUtils.isNoiseSuppressorSupported();
         if (noiseSuppressorSupported) {
-            Log.d(TAG, "createJavaAudioDevice: noiseSuppressorSupported");
+            LogUtil.d(TAG, "createJavaAudioDevice: noiseSuppressorSupported");
             WebRtcAudioUtils.setWebRtcBasedNoiseSuppressor(true);
         }
 
@@ -222,36 +213,36 @@ public class TelephoneClient {
     private JavaAudioDeviceModule.AudioRecordErrorCallback audioRecordErrorCallback = new JavaAudioDeviceModule.AudioRecordErrorCallback() {
         @Override
         public void onWebRtcAudioRecordInitError(String errorMessage) {
-            Log.e(TAG, "onWebRtcAudioRecordInitError: " + errorMessage);
+            LogUtil.e(TAG, "onWebRtcAudioRecordInitError: " + errorMessage);
         }
 
         @Override
         public void onWebRtcAudioRecordStartError(
                 JavaAudioDeviceModule.AudioRecordStartErrorCode errorCode, String errorMessage) {
-            Log.e(TAG, "onWebRtcAudioRecordStartError: " + errorCode + ". " + errorMessage);
+            LogUtil.e(TAG, "onWebRtcAudioRecordStartError: " + errorCode + ". " + errorMessage);
         }
 
         @Override
         public void onWebRtcAudioRecordError(String errorMessage) {
-            Log.e(TAG, "onWebRtcAudioRecordError: " + errorMessage);
+            LogUtil.e(TAG, "onWebRtcAudioRecordError: " + errorMessage);
         }
     };
 
     private JavaAudioDeviceModule.AudioTrackErrorCallback audioTrackErrorCallback = new JavaAudioDeviceModule.AudioTrackErrorCallback() {
         @Override
         public void onWebRtcAudioTrackInitError(String errorMessage) {
-            Log.e(TAG, "onWebRtcAudioTrackInitError: " + errorMessage);
+            LogUtil.e(TAG, "onWebRtcAudioTrackInitError: " + errorMessage);
         }
 
         @Override
         public void onWebRtcAudioTrackStartError(
                 JavaAudioDeviceModule.AudioTrackStartErrorCode errorCode, String errorMessage) {
-            Log.e(TAG, "onWebRtcAudioTrackStartError: " + errorCode + ". " + errorMessage);
+            LogUtil.e(TAG, "onWebRtcAudioTrackStartError: " + errorCode + ". " + errorMessage);
         }
 
         @Override
         public void onWebRtcAudioTrackError(String errorMessage) {
-            Log.e(TAG, "onWebRtcAudioTrackError: " + errorMessage);
+            LogUtil.e(TAG, "onWebRtcAudioTrackError: " + errorMessage);
         }
     };
 
@@ -284,8 +275,7 @@ public class TelephoneClient {
 
 
     public void attachIncomingTelegram(TelephoneIncomingTelegram telephone, TelephoneCall telephoneCall) {
-        getCall()
-                .setSipTransfer(signallingTransfer);
+        getCall().setSipTransfer(signallingTransfer);
         telephoneCall.attachIncomingTelegram(telephone);
     }
 

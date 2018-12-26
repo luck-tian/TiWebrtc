@@ -1,17 +1,20 @@
 package com.hhtc.dialer.call.service;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.hhtc.dialer.R;
@@ -20,9 +23,13 @@ import com.hhtc.dialer.TelephoneIncomingTelegram;
 import com.hhtc.dialer.call.client.TelephoneCall;
 import com.hhtc.dialer.call.client.TelephoneClient;
 import com.hhtc.dialer.call.util.DataUtils;
+import com.hhtc.dialer.data.tradition.TraditionSynchronise;
 import com.hhtc.dialer.thread.TelephoneThreadDispatcher;
+import com.hhtc.dialer.utils.LogUtil;
 
 import org.webrtc.PeerConnection;
+
+import java.util.Objects;
 
 import static com.hhtc.dialer.call.client.TelephoneCall.MAKE_CALL;
 import static com.hhtc.dialer.call.client.TelephoneCall.REMOTE_HANG_UP;
@@ -35,6 +42,13 @@ import static com.hhtc.dialer.call.client.TelephoneCall.STATELESS;
 public class TelephoneService extends Service {
 
     private static final String TAG = TelephoneService.class.getSimpleName();
+
+    public static Uri URI_USER = new Uri.Builder()
+            .scheme("content")
+            .authority("com.hhtc.dialer.user.provider")
+            .query("user")
+            .build();
+
     /**
      * Signaling service address (ip address)
      */
@@ -71,7 +85,7 @@ public class TelephoneService extends Service {
         @Override
         public void openCommunicateTelephoneWindow(TelephoneCommunicateTelephone telephone, String remoteName) throws RemoteException {
             synchronized (TelephoneCall.LOCK) {
-                Log.d("TelephoneCall", "openCommunicateTelephoneWindow: ");
+                LogUtil.d("TelephoneCall", "openCommunicateTelephoneWindow: ");
                 if (telephoneClient.getCall().getTelephone() != null) {
                     telephone.closeCommunicateTelephoneWindow();
                     TelephoneThreadDispatcher.getInstance().execute(() -> Toast.makeText(getApplicationContext(), R.string.other_person_phone, Toast.LENGTH_SHORT).show(), TelephoneThreadDispatcher.DispatcherType.UI);
@@ -98,8 +112,31 @@ public class TelephoneService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        TraditionSynchronise.setContext(getApplicationContext());
         showNotification();
         telephoneClient = new TelephoneClient(getApplication(), SIP_SERVICE_ADDRESS);
+        obtainUser();
+    }
+
+    private void obtainUser() {
+        ContentResolver resolver = getContentResolver();
+        resolver.registerContentObserver(URI_USER, true, new UserContentObserver(TelephoneThreadDispatcher.getInstance().getHandler(), this::changedUserInfo));
+        @SuppressLint("Recycle") Cursor query = resolver.query(URI_USER, null, null, null, null);
+        obtainUserInfo(query);
+    }
+
+    private void obtainUserInfo(Cursor query) {
+        if (Objects.requireNonNull(query).moveToNext()) {
+            DataUtils.userName = query.getString(query.getColumnIndex("user_name"));
+            telephoneClient.createAck();
+        }
+        query.close();
+    }
+
+    private void changedUserInfo(boolean change) {
+        ContentResolver resolver = getContentResolver();
+        @SuppressLint("Recycle") Cursor query = resolver.query(URI_USER, null, null, null, null);
+        obtainUserInfo(query);
     }
 
     @Override
@@ -133,7 +170,7 @@ public class TelephoneService extends Service {
                 //正在打电话
                 TelephoneThreadDispatcher.getInstance().execute(() -> Toast.makeText(getApplicationContext(), R.string.other_person_phone, Toast.LENGTH_SHORT).show(), TelephoneThreadDispatcher.DispatcherType.UI);
             } else {
-                Log.d(TAG, "localMakeCall: " + remoteName + " telephoneClient.getCall().getStatus(): " + telephoneClient.getCall().getStatus());
+                LogUtil.d(TAG, "localMakeCall: " + remoteName + " telephoneClient.getCall().getStatus(): " + telephoneClient.getCall().getStatus());
                 TelephoneCall telephoneCall = TelephoneCall.obtainCall(remoteName);
                 telephoneClient.callRemote(telephoneCall);
             }
@@ -151,7 +188,7 @@ public class TelephoneService extends Service {
      * 拒绝接听电话
      */
     private void localRefuseAnswer() {
-        Log.d(TAG, "localRefuseAnswer: " + telephoneClient.getCall().getRemoteName());
+        LogUtil.d(TAG, "localRefuseAnswer: " + telephoneClient.getCall().getRemoteName());
         telephoneClient.refuseAnswer();
     }
 
@@ -159,7 +196,7 @@ public class TelephoneService extends Service {
      * 接听电话
      */
     private void localAnswer() {
-        Log.e(TAG, "localAnswer: " + telephoneClient.getCall().getRemoteName());
+        LogUtil.e(TAG, "localAnswer: " + telephoneClient.getCall().getRemoteName());
         telephoneClient.getCall().answer();
     }
 

@@ -1,8 +1,5 @@
 package com.hhtc.dialer.call.client;
 
-import android.util.Log;
-
-
 import com.hhtc.dialer.call.strategy.CheckingStrategy;
 import com.hhtc.dialer.call.strategy.ClosedStrategy;
 import com.hhtc.dialer.call.strategy.CompletedStrategy;
@@ -11,6 +8,7 @@ import com.hhtc.dialer.call.strategy.DisconnectedStrategy;
 import com.hhtc.dialer.call.strategy.FailedStrategy;
 import com.hhtc.dialer.call.strategy.NewStrategy;
 import com.hhtc.dialer.call.strategy.PeerConnectionExecutor;
+import com.hhtc.dialer.utils.LogUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,7 +77,7 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
      */
     @Override
     public void onSignalingChange(PeerConnection.SignalingState signalingState) {
-        Log.d(TAG, "onSignalingChange: " + signalingState.name());
+        LogUtil.d(TAG, "onSignalingChange: " + signalingState.name());
     }
 
     /**
@@ -89,7 +87,7 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
      */
     @Override
     public void onIceConnectionChange(PeerConnection.IceConnectionState iceConnectionState) {
-        Log.d(TAG, "onIceConnectionChange: " + iceConnectionState.name());
+        LogUtil.d(TAG, "onIceConnectionChange: " + iceConnectionState.name());
         //状态发送改变是的时候 ice连接状态 实现超时
         peerConnectionExecutor.getStrategy(iceConnectionState.name()).execute();
     }
@@ -101,7 +99,7 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
      */
     @Override
     public void onIceConnectionReceivingChange(boolean changes) {
-        Log.d(TAG, "onIceConnectionReceivingChange: " + changes);
+        LogUtil.d(TAG, "onIceConnectionReceivingChange: " + changes);
     }
 
     /**
@@ -111,7 +109,7 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
      */
     @Override
     public void onIceGatheringChange(PeerConnection.IceGatheringState iceGatheringState) {
-        Log.d(TAG, "onIceGatheringChange: " + iceGatheringState.name());
+        LogUtil.d(TAG, "onIceGatheringChange: " + iceGatheringState.name());
 
     }
 
@@ -122,7 +120,7 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
      */
     @Override
     public void onIceCandidate(IceCandidate iceCandidate) {
-        Log.d(TAG, "onIceCandidate: " + iceCandidate.toString());
+        LogUtil.d(TAG, "onIceCandidate: " + iceCandidate.toString());
         try {
             //构建信令数据
             JSONObject message = new JSONObject();
@@ -150,7 +148,7 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
      */
     @Override
     public void onIceCandidatesRemoved(IceCandidate[] iceCandidates) {
-        Log.d(TAG, "onIceCandidatesRemoved: " + iceCandidates.toString());
+        LogUtil.d(TAG, "onIceCandidatesRemoved: " + iceCandidates.toString());
     }
 
     /**
@@ -160,7 +158,7 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
      */
     @Override
     public void onAddStream(MediaStream mediaStream) {
-        Log.d(TAG, "onAddStream: " + mediaStream.getId());
+        LogUtil.d(TAG, "onAddStream: " + mediaStream.getId());
     }
 
     /**
@@ -170,7 +168,7 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
      */
     @Override
     public void onRemoveStream(MediaStream mediaStream) {
-        Log.d(TAG, "onRemoveStream: " + mediaStream.getId());
+        LogUtil.d(TAG, "onRemoveStream: " + mediaStream.getId());
     }
 
     /**
@@ -180,7 +178,7 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
      */
     @Override
     public void onDataChannel(DataChannel dataChannel) {
-        Log.d(TAG, "onDataChannel: " + dataChannel.label());
+        LogUtil.d(TAG, "onDataChannel: " + dataChannel.label());
     }
 
     /**
@@ -188,7 +186,7 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
      */
     @Override
     public void onRenegotiationNeeded() {
-        Log.d(TAG, "onRenegotiationNeeded: ");
+        LogUtil.d(TAG, "onRenegotiationNeeded: ");
     }
 
     /**
@@ -199,7 +197,7 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
      */
     @Override
     public void onAddTrack(RtpReceiver rtpReceiver, MediaStream[] mediaStreams) {
-        Log.d(TAG, "onAddTrack: " + rtpReceiver.id());
+        LogUtil.d(TAG, "onAddTrack: " + rtpReceiver.id());
     }
 
     /**
@@ -207,16 +205,16 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
      */
     @Override
     public void onTrack(RtpTransceiver transceiver) {
-        Log.d(TAG, "onTrack: " + transceiver.getMid());
+        LogUtil.d(TAG, "onTrack: " + transceiver.getMid());
     }
 
     @Override
     public void onCreateSuccess(SessionDescription sessionDescription) {
-        Log.d(TAG, "onCreateSuccess: " + sessionDescription.description);
+        LogUtil.d(TAG, "onCreateSuccess: " + sessionDescription.description);
         String type = sessionDescription.type.canonicalForm();
-        Log.d(TAG, "onCreateSuccess " + type);
+        LogUtil.d(TAG, "onCreateSuccess " + type);
         //设置本地LocalDescription
-        peerConnection.setLocalDescription(this, sessionDescription);
+        peerConnection.setLocalDescription(TelephonePeerConnection.this, sessionDescription);
         //构建信令数据
         try {
             JSONObject message = new JSONObject();
@@ -233,17 +231,17 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
 
     @Override
     public void onSetSuccess() {
-        Log.d(TAG, "onSetSuccess: ");
+        LogUtil.d(TAG, "onSetSuccess: ");
     }
 
     @Override
     public void onCreateFailure(String s) {
-        Log.d(TAG, "onCreateFailure: " + s);
+        LogUtil.d(TAG, "onCreateFailure: " + s);
     }
 
     @Override
     public void onSetFailure(String s) {
-        Log.d(TAG, "onSetFailure: " + s);
+        LogUtil.d(TAG, "onSetFailure: " + s);
     }
 
 
@@ -255,12 +253,12 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
     @Override
     public void onTick(long millisUntilFinished) {
         timeOut += COUNT_DOWN_INTERVAL;
-        Log.d(TAG, "onTick: 超时 : " + generateCountdownText(timeOut) + "  " + isCancelled());
+        LogUtil.d(TAG, "onTick: 超时 : " + generateCountdownText(timeOut) + "  " + isCancelled());
     }
 
     @Override
     public void onFinish() {
-        Log.d(TAG, "onFinish: " + isCancelled());
+        LogUtil.d(TAG, "onFinish: " + isCancelled());
         if (telephoneCall.getStatus() != STATELESS && !isCancelled()) {
             telephoneCall.hangUp();
         }
@@ -269,7 +267,7 @@ public class TelephonePeerConnection extends RetryConnectionTimer implements Pee
     @Override
     public void onStop() {
         cancel();
-        Log.d(TAG, "onStop: onStop");
+        LogUtil.d(TAG, "onStop: onStop");
 
     }
 

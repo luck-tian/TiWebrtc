@@ -70,4 +70,8 @@ public class TelephoneThreadDispatcher {
         UI,
         RTC
     }
+
+    public Handler getHandler() {
+        return mHandler;
+    }
 }

@@ -234,4 +234,9 @@ public class TraditionSynchronise {
     public static Context getContext() {
         return context;
     }
+
+    public static void setContext(Context context) {
+        TraditionSynchronise.context = context;
+    }
+
 }

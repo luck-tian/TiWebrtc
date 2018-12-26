@@ -31,6 +31,8 @@ import com.hhtc.dialer.view.CallTimerView;
 import com.hhtc.dialer.view.SwitchIconView;
 import com.hhtc.dialer.window.SIPWindow;
 
+import java.util.Objects;
+
 import static android.media.AudioManager.MODE_IN_COMMUNICATION;
 import static android.media.AudioManager.MODE_NORMAL;
 
@@ -110,6 +112,13 @@ public class SIPActivity extends AppCompatActivity implements View.OnClickListen
         Uri data = getIntent().getData();
         if (data != null) {
             remoteName = data.getQuery();
+            String authority = data.getAuthority();
+            if(Objects.nonNull(authority)){
+                if (!isFinishing() && !call_timer.isStart()) {
+                    call_timer.setVisibility(View.VISIBLE);
+                    call_timer.start(0);
+                }
+            }
         } else {
             remoteName = getIntent().getStringExtra(REMOTE_NAME);
         }
@@ -166,7 +175,8 @@ public class SIPActivity extends AppCompatActivity implements View.OnClickListen
         end_call.setOnClickListener(v -> {
             sipWindow = null;
             try {
-                telephoneCall.hangUp();
+                if (telephoneCall != null)
+                    telephoneCall.hangUp();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

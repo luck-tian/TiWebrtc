@@ -160,6 +160,21 @@ public abstract class IntentProvider {
         };
     }
 
+
+    public static IntentProvider getCallProvider2(String remoteName) {
+        return new IntentProvider() {
+            @Override
+            public Intent getIntent(Context context) {
+                return new Intent(intentUnits.ACTION_SIP_CALL,
+                        new Uri.Builder()
+                                .scheme("call")
+                                .query(remoteName)
+                                .authority("com.hhtc.dialer")
+                                .build());
+            }
+        };
+    }
+
     public static IntentProvider getCallServiceProvider() {
         return new IntentProvider() {
             @Override

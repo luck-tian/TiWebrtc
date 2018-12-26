@@ -261,4 +261,8 @@ public class Repository {
     public UserInfo loadUserInfoWDF() {
         return database.getUserInfoDao().loadUserInfoWDF();
     }
+
+    public ToDoDatabase getDatabase() {
+        return database;
+    }
 }

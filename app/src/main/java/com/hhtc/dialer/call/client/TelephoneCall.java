@@ -2,6 +2,7 @@ package com.hhtc.dialer.call.client;
 
 import android.os.CountDownTimer;
 import android.os.RemoteException;
+import android.provider.CallLog;
 import android.util.Log;
 
 import com.hhtc.dialer.TelephoneCommunicateTelephone;
@@ -90,10 +91,9 @@ public class TelephoneCall extends CountDownTimer {
 
     private TelephoneIncomingTelegram communicateTelephone;
 
-    private RecentCallLog  callLog;
+    private RecentCallLog callLog;
 
     private int type;
-
 
     private TelephoneCall() {
         super(MILLIS_IN_FUTURE, COUNT_DOWN_INTERVAL);
@@ -230,8 +230,9 @@ public class TelephoneCall extends CountDownTimer {
             signallingTransfer.makeCall(DataUtils.getTelName(), remoteName);
             type = android.provider.CallLog.Calls.OUTGOING_TYPE;
             callLog = new RecentCallLog();
-            if (telephone == null)
+            if (telephone == null) {
                 intentUnits.startCall(IntentProvider.getCallProvider(remoteName).getIntent(TraditionSynchronise.getContext()));
+            }
             NotificationMgr.getInstance().setAudioMode(MODE_IN_COMMUNICATION);
             start();
         }
@@ -260,7 +261,6 @@ public class TelephoneCall extends CountDownTimer {
 
                 peerClose();
 
-
                 callLog = null;
                 status = STATELESS;
             }
@@ -283,7 +283,7 @@ public class TelephoneCall extends CountDownTimer {
                 getSignallingTransfer().createAndJoinRoom(getRemoteName());
                 LogUtil.e(TAG, "answer: create android join room : " + getRemoteName());
                 //启动接听电话界面
-                intentUnits.startCall(IntentProvider.getCallProvider(remoteName).getIntent(TraditionSynchronise.getContext()));
+                intentUnits.startCall(IntentProvider.getCallProvider2(remoteName).getIntent(TraditionSynchronise.getContext()));
                 //设置日志类型
                 type = android.provider.CallLog.Calls.INCOMING_TYPE;
 
@@ -482,7 +482,7 @@ public class TelephoneCall extends CountDownTimer {
     public void remoteTimeout() {
         synchronized (LOCK) {
             if (callLog != null) {
-                Log.d(TAG, "remoteTimeout: ");
+                LogUtil.d(TAG, "remoteTimeout: ");
                 status = REMOTE_TIMEOUT;
                 if (telephone != null) {
                     try {

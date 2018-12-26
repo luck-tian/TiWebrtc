@@ -16,7 +16,7 @@ public class JoinedEmitter extends BaseEmitter {
     @Override
     public void pushData(JSONObject data) throws Exception {
         String fromId = data.getString("id");
-        TelephoneThreadDispatcher.getInstance().execute(() -> getTelephoneCall().createNewConnection(fromId), TelephoneThreadDispatcher.DispatcherType.RTC);
+        TelephoneThreadDispatcher.getInstance().execute(() -> getTelephoneCall().createNewConnection(fromId),TelephoneThreadDispatcher.DispatcherType.RTC);
 
     }
 
