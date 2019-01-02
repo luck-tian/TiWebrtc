@@ -52,7 +52,7 @@ public class TelephoneService extends Service {
     /**
      * Signaling service address (ip address)
      */
-    private static String SIP_SERVICE_ADDRESS = "https://13.229.204.253:8443";
+    private static String SIP_SERVICE_ADDRESS = "https://xxxxxx:";
     private static int PUSH_NOTIFICATION_ID = 8087;
     private static final String PUSH_CHANNEL_ID = "PUSH_NOTIFY_ID";
     private static final String PUSH_CHANNEL_NAME = "PUSH_NOTIFY_NAME";
